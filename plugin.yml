@@ -1,0 +1,14 @@
+---
+name: HotBox
+main: kim\present\hotbox\HotBox
+version: 0.1.0-DEV
+api: [3.0.0, 3.0.0-ALPHA12]
+author: PresentKim
+website: https://github.com/PresentKim/HotBox-PMMP
+description: Have fun with the box for hot-time!
+
+permissions:
+  hotbox.cmd:
+    description: HotBox command
+    default: op
+...
