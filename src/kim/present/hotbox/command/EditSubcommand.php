@@ -23,7 +23,7 @@ class EditSubcommand extends Subcommand{
 	 */
 	public function execute(CommandSender $sender) : void{
 		if($sender instanceof Player){
-			$sender->addWindow($this->plugin->getHotBoxInventory());
+			$sender->addWindow($this->plugin->getInventory());
 		}else{
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.onlyPlayer"));
 		}

@@ -57,7 +57,7 @@ class HotBox extends PluginBase{
 	/**
 	 * @var HotBoxInventory
 	 */
-	private $hotBoxInventory;
+	private $inventory;
 
 	/**
 	 * @var Subcommand[]
@@ -91,13 +91,13 @@ class HotBox extends PluginBase{
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
 				$this->lastTime = $namedTag->getInt("LastTime");
-				$this->hotBoxInventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag("HotBoxInventory"));
+				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag("HotBoxInventory"));
 			}else{
 				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
 		}else{
 			$this->lastTime = -1;
-			$this->hotBoxInventory = new HotBoxInventory();
+			$this->inventory = new HotBoxInventory();
 		}
 
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
@@ -120,7 +120,7 @@ class HotBox extends PluginBase{
 		//Save hot time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag("LastTime", $this->lastTime),
-			$this->hotBoxInventory->nbtSerialize("HotBoxInventory")
+			$this->inventory->nbtSerialize("HotBoxInventory")
 		]);
 		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($namedTag));
 	}
@@ -191,8 +191,8 @@ class HotBox extends PluginBase{
 	/**
 	 * @return HotBoxInventory
 	 */
-	public function getHotBoxInventory() : HotBoxInventory{
-		return $this->hotBoxInventory;
+	public function getInventory() : HotBoxInventory{
+		return $this->inventory;
 	}
 
 	/**

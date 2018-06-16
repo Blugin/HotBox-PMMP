@@ -31,7 +31,7 @@ class HotBoxRewardInventory extends HotBoxInventory{
 				$items[] = Item::nbtDeserialize($itemTag);
 			}
 		}else{
-			$items = HotBox::getInstance()->getHotBoxInventory()->getContents();
+			$items = HotBox::getInstance()->getInventory()->getContents();
 		}
 		parent::__construct($items);
 	}
