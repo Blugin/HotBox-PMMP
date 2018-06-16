@@ -33,6 +33,11 @@ class HotBox extends PluginBase{
 	 */
 	private $command;
 
+	/**
+	 * @var bool
+	 */
+	private $isHotTime = false;
+
 	public function onLoad() : void{
 		self::$instance = $this;
 	}
@@ -73,6 +78,20 @@ class HotBox extends PluginBase{
 	 */
 	public function getLanguage() : PluginLang{
 		return $this->language;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isHotTime() : bool{
+		return $this->isHotTime;
+	}
+
+	/**
+	 * @param bool $enable = true
+	 */
+	public function setHotTime(bool $enable = true) : void{
+		$this->isHotTime = $enable;
 	}
 
 	/**
