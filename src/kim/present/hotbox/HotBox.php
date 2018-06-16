@@ -10,7 +10,8 @@ use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
 use pocketmine\nbt\BigEndianNBTStream;
-use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntTag;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -42,6 +43,11 @@ class HotBox extends PluginBase{
 	private $isHotTime = false;
 
 	/**
+	 * @var int
+	 */
+	private $lastTime;
+
+	/**
 	 * @var HotBoxInventory
 	 */
 	private $hotBoxInventory;
@@ -62,15 +68,17 @@ class HotBox extends PluginBase{
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
-		//Load hottime reward data
+		//Load hot time reward data
 		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
-			if($namedTag instanceof ListTag){
-				$this->hotBoxInventory = HotBoxInventory::nbtDeserialize($namedTag);
+			if($namedTag instanceof CompoundTag){
+				$this->lastTime = $namedTag->getInt("LastTime");
+				$this->hotBoxInventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag("HotBoxInventory"));
 			}else{
-				$this->getLogger()->error("The file is not in the NBT-ListTag format : $file");
+				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
 		}else{
+			$this->lastTime = -1;
 			$this->hotBoxInventory = new HotBoxInventory();
 		}
 
@@ -82,8 +90,12 @@ class HotBox extends PluginBase{
 	}
 
 	public function onDisable() : void{
-		//Save hottime reward data
-		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($this->hotBoxInventory->nbtSerialize("HotBoxInventory")));
+		//Save hot time reward data
+		$namedTag = new CompoundTag("HotBox", [
+			new IntTag("LastTime", $this->lastTime),
+			$this->hotBoxInventory->nbtSerialize("HotBoxInventory")
+		]);
+		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($namedTag));
 	}
 
 	/**
