@@ -9,11 +9,11 @@ settings:
 
 command:
   #Name of main command
-  #You can change this to be what you want.
+  #You can change this to be what you want
   name: "hotbox"
 
   #Aliases of main command
-  #You can add, replace, or remove them as you like.
+  #You can add, replace, or remove them as you like
   aliases: ["hb", "hoxtimebox"]
 
   children:
