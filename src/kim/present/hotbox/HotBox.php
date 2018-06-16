@@ -10,7 +10,6 @@ use kim\present\hotbox\lang\PluginLang;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
-use pocketmine\item\Item;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
@@ -114,11 +113,53 @@ class HotBox extends PluginBase{
 			if(empty($args[0])){
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
 					$sender->addWindow(new HotBoxRewardInventory($sender));
-					return true;
+				}else{
+					//TODO: Send subcommand select form
+				}
+			}else{
+				$config = $this->getConfig();
+				if(strcasecmp($args[0], $config->getNested("command.children.open.name")) == 0){
+					if($sender->hasPermission("hotbox.cmd.open")){
+						$sender->addWindow(new HotBoxRewardInventory($sender));
+					}else{
+						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
+					}
+				}elseif(strcasecmp($args[0], $config->getNested("command.children.edit.name")) == 0){
+					if($sender->hasPermission("hotbox.cmd.edit")){
+						$sender->addWindow($this->hotBoxInventory);
+					}else{
+						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
+					}
+				}elseif(strcasecmp($args[0], $config->getNested("command.children.on.name")) == 0){
+					if($sender->hasPermission("hotbox.cmd.on")){
+						if($this->isHotTime){
+							$sender->sendMessage($this->language->translateString("commands.hotbox.on.already"));
+						}else{
+							$this->isHotTime = true;
+							$this->lastTime = time();
+							$sender->sendMessage($this->language->translateString("commands.hotbox.on.success"));
+						}
+					}else{
+						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
+					}
+				}elseif(strcasecmp($args[0], $config->getNested("command.children.off.name")) == 0){
+					if($sender->hasPermission("hotbox.cmd.off")){
+						if($this->isHotTime){
+							$this->isHotTime = false;
+							$sender->sendMessage($this->language->translateString("commands.hotbox.off.success"));
+						}else{
+							$sender->sendMessage($this->language->translateString("commands.hotbox.off.already"));
+						}
+						$sender->addWindow($this->hotBoxInventory);
+					}else{
+						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
+					}
+				}else{
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
