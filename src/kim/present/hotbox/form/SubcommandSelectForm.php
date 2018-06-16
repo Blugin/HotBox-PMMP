@@ -55,8 +55,8 @@ class SubcommandSelectForm extends MenuForm{
 		$this->commands = [
 			self::OPTION_OPEN => $command . $config->getNested("command.children.open.name"),
 			self::OPTION_EDIT => $command . $config->getNested("command.children.edit.name"),
-			self::OPTION_ON => $command . $config->getNested("command.children.on.name"),
-			self::OPTION_OFF => $command . $config->getNested("command.children.off.name")
+			self::OPTION_ON => $command . $config->getNested("command.children.enable.name"),
+			self::OPTION_OFF => $command . $config->getNested("command.children.disable.name")
 		];
 
 
@@ -64,8 +64,8 @@ class SubcommandSelectForm extends MenuForm{
 		parent::__construct($lang->translateString("hotbox.menu.title"), $lang->translateString("hotbox.menu.text"), [
 			new MenuOption($lang->translateString("hotbox.menu.option.open.text")),
 			new MenuOption($lang->translateString("hotbox.menu.option.edit.text")),
-			new MenuOption($lang->translateString("hotbox.menu.option.on.text")),
-			new MenuOption($lang->translateString("hotbox.menu.option.off.text")),
+			new MenuOption($lang->translateString("hotbox.menu.option.enable.text")),
+			new MenuOption($lang->translateString("hotbox.menu.option.disable.text")),
 		]);
 	}
 

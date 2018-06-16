@@ -30,9 +30,9 @@ command:
     edit:
       name: "Edit"
       aliases: ["e"]
-    on:
-      name: "ON"
-      aliases: ["enable", "start"]
-    off:
-      name: "OFF"
-      aliases: ["disable", "stop"]
+    enable:
+      name: "Enable"
+      aliases: ["on", "start"]
+    disable:
+      name: "Disable"
+      aliases: ["off", "stop"]

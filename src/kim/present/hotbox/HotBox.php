@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace kim\present\hotbox;
 
 use kim\present\hotbox\command\{
-	EditSubcommand, OffSubcommand, OnSubcommand, OpenSubcommand, Subcommand
+	EditSubcommand, DisableSubcommand, EnableSubcommand, OpenSubcommand, Subcommand
 };
 use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
@@ -85,7 +85,6 @@ class HotBox extends PluginBase{
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
 		$config = $this->getConfig();
-		var_dump($config->getNested("command.children"));
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
@@ -112,8 +111,8 @@ class HotBox extends PluginBase{
 		$this->subcommands = [
 			new OpenSubcommand($this),
 			new EditSubcommand($this),
-			new OnSubcommand($this),
-			new OffSubcommand($this)
+			new EnableSubcommand($this),
+			new DisableSubcommand($this)
 		];
 		$this->menuForm = new SubcommandSelectForm($this);
 		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);

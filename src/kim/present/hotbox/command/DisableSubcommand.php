@@ -7,14 +7,14 @@ namespace kim\present\hotbox\command;
 use kim\present\hotbox\HotBox;
 use pocketmine\command\CommandSender;
 
-class OffSubcommand extends Subcommand{
+class DisableSubcommand extends Subcommand{
 	/**
-	 * OffSubcommand constructor.
+	 * DisableSubcommand constructor.
 	 *
 	 * @param HotBox $plugin
 	 */
 	public function __construct(HotBox $plugin){
-		parent::__construct($plugin, "off");
+		parent::__construct($plugin, "disable");
 	}
 
 	/**
@@ -23,9 +23,9 @@ class OffSubcommand extends Subcommand{
 	public function execute(CommandSender $sender) : void{
 		if($this->plugin->isHotTime()){
 			$this->plugin->setHotTime(false);
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.off.success"));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.disable.success"));
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.off.already"));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.disable.already"));
 		}
 	}
 }
