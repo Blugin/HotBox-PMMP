@@ -1,4 +1,4 @@
-# Advanced configuration file for HoxBox plugin
+# Advanced configuration file for HotBox plugin
 # Some of these settings are safe, others can break your server if modified incorrectly
 # New settings/defaults won't appear automatically on this file when upgrading
 
@@ -14,7 +14,7 @@ command:
 
   #Aliases of main command
   #You can add, replace, or remove them as you like
-  aliases: ["hb", "hoxtimebox"]
+  aliases: ["hb", "hottimebox"]
 
   children:
     #Setting of subcommands
