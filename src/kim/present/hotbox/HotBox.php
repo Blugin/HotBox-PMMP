@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox;
 
+use kim\present\hotbox\command\{
+	EditSubcommand, OffSubcommand, OnSubcommand, OpenSubcommand, Subcommand
+};
 use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\inventory\HotBoxRewardInventory;
@@ -57,6 +60,11 @@ class HotBox extends PluginBase{
 	private $hotBoxInventory;
 
 	/**
+	 * @var Subcommand[]
+	 */
+	private $subcommands;
+
+	/**
 	 * @var SubcommandSelectForm
 	 */
 	private $subcommandSelectForm;
@@ -74,6 +82,7 @@ class HotBox extends PluginBase{
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
 		$config = $this->getConfig();
+		var_dump($config->getNested("command.children"));
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
@@ -97,6 +106,12 @@ class HotBox extends PluginBase{
 		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
+		$this->subcommands = [
+			new OpenSubcommand($this),
+			new EditSubcommand($this),
+			new OnSubcommand($this),
+			new OffSubcommand($this)
+		];
 		$this->subcommandSelectForm = new SubcommandSelectForm($this);
 		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);
 	}
@@ -126,50 +141,16 @@ class HotBox extends PluginBase{
 				}else{
 					$this->subcommandSelectForm->sendForm($sender);
 				}
-			}else{
-				$config = $this->getConfig();
-				if(strcasecmp($args[0], $config->getNested("command.children.open.name")) == 0){
-					if($sender->hasPermission("hotbox.cmd.open")){
-						$sender->addWindow(new HotBoxRewardInventory($sender));
-					}else{
-						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
-					}
-				}elseif(strcasecmp($args[0], $config->getNested("command.children.edit.name")) == 0){
-					if($sender->hasPermission("hotbox.cmd.edit")){
-						$sender->addWindow($this->hotBoxInventory);
-					}else{
-						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
-					}
-				}elseif(strcasecmp($args[0], $config->getNested("command.children.on.name")) == 0){
-					if($sender->hasPermission("hotbox.cmd.on")){
-						if($this->isHotTime){
-							$sender->sendMessage($this->language->translateString("commands.hotbox.on.already"));
-						}else{
-							$this->isHotTime = true;
-							$this->lastTime = time();
-							$sender->sendMessage($this->language->translateString("commands.hotbox.on.success"));
-						}
-					}else{
-						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
-					}
-				}elseif(strcasecmp($args[0], $config->getNested("command.children.off.name")) == 0){
-					if($sender->hasPermission("hotbox.cmd.off")){
-						if($this->isHotTime){
-							$this->isHotTime = false;
-							$sender->sendMessage($this->language->translateString("commands.hotbox.off.success"));
-						}else{
-							$sender->sendMessage($this->language->translateString("commands.hotbox.off.already"));
-						}
-						$sender->addWindow($this->hotBoxInventory);
-					}else{
-						$sender->sendMessage($this->language->translateString("commands.generic.permission"));
-					}
-				}else{
-					return false;
-				}
+				return true;
 			}
 		}
-		return true;
+		foreach($this->subcommands as $key => $subcommand){
+			if($subcommand->checkLabel($args[0])){
+				$subcommand->handle($sender);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
