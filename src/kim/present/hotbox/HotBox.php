@@ -152,6 +152,20 @@ class HotBox extends PluginBase{
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getLastTime() : int{
+		return $this->lastTime;
+	}
+
+	/**
+	 * @param int $lastTime
+	 */
+	public function setLastTime(int $lastTime) : void{
+		$this->lastTime = $lastTime;
+	}
+
+	/**
 	 * @return HotBoxInventory
 	 */
 	public function getHotBoxInventory() : HotBoxInventory{
