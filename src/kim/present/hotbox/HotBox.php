@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox;
 
+use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\lang\PluginLang;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
+use pocketmine\nbt\BigEndianNBTStream;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -38,6 +41,11 @@ class HotBox extends PluginBase{
 	 */
 	private $isHotTime = false;
 
+	/**
+	 * @var HotBoxInventory
+	 */
+	private $hotBoxInventory;
+
 	public function onLoad() : void{
 		self::$instance = $this;
 	}
@@ -54,11 +62,28 @@ class HotBox extends PluginBase{
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
+		//Load hottime reward data
+		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
+			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
+			if($namedTag instanceof ListTag){
+				$this->hotBoxInventory = HotBoxInventory::nbtDeserialize($namedTag);
+			}else{
+				$this->getLogger()->error("The file is not in the NBT-ListTag format : $file");
+			}
+		}else{
+			$this->hotBoxInventory = new HotBoxInventory();
+		}
+
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
 		$this->command->setAliases($config->getNested("command.aliases"));
 		$this->command->setUsage($this->language->translateString("commands.hotbox.usage"));
 		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
+	}
+
+	public function onDisable() : void{
+		//Save hottime reward data
+		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($this->hotBoxInventory->nbtSerialize("HotBoxInventory")));
 	}
 
 	/**
@@ -92,6 +117,13 @@ class HotBox extends PluginBase{
 	 */
 	public function setHotTime(bool $enable = true) : void{
 		$this->isHotTime = $enable;
+	}
+
+	/**
+	 * @return HotBoxInventory
+	 */
+	public function getHotBoxInventory() : HotBoxInventory{
+		return $this->hotBoxInventory;
 	}
 
 	/**
