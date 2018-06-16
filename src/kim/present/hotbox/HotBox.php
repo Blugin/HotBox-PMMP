@@ -67,7 +67,7 @@ class HotBox extends PluginBase{
 	/**
 	 * @var SubcommandSelectForm
 	 */
-	private $subcommandSelectForm;
+	private $menuForm;
 
 	public function onLoad() : void{
 		self::$instance = $this;
@@ -112,7 +112,7 @@ class HotBox extends PluginBase{
 			new OnSubcommand($this),
 			new OffSubcommand($this)
 		];
-		$this->subcommandSelectForm = new SubcommandSelectForm($this);
+		$this->menuForm = new SubcommandSelectForm($this);
 		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);
 	}
 
@@ -139,7 +139,7 @@ class HotBox extends PluginBase{
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
 					$sender->addWindow(new HotBoxRewardInventory($sender));
 				}else{
-					$this->subcommandSelectForm->sendForm($sender);
+					$this->menuForm->sendForm($sender);
 				}
 				return true;
 			}
@@ -198,8 +198,8 @@ class HotBox extends PluginBase{
 	/**
 	 * @return SubcommandSelectForm
 	 */
-	public function getSubcommandSelectForm() : SubcommandSelectForm{
-		return $this->subcommandSelectForm;
+	public function getMenuForm() : SubcommandSelectForm{
+		return $this->menuForm;
 	}
 
 	/**

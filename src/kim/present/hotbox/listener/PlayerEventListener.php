@@ -32,7 +32,7 @@ class PlayerEventListener implements Listener{
 	public function onDataPacketReceiveEvent(DataPacketReceiveEvent $event) : void{
 		$pk = $event->getPacket();
 		if($pk instanceof ModalFormResponsePacket && $pk->formId === (int) $this->owner->getConfig()->getNested("settings.formId")){
-			$this->owner->getSubcommandSelectForm()->handleResponse($event->getPlayer(), json_decode($pk->formData));
+			$this->owner->getMenuForm()->handleResponse($event->getPlayer(), json_decode($pk->formData));
 			$event->setCancelled();
 		}
 	}
