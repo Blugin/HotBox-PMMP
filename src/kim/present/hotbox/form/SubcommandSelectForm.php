@@ -93,7 +93,7 @@ class SubcommandSelectForm extends MenuForm{
 	 */
 	public function sendForm(Player $player) : void{
 		$formPacket = new ModalFormRequestPacket();
-		$formPacket->formId = (int) $this->plugin->getConfig()->getNested("formId.select")
+		$formPacket->formId = (int) $this->plugin->getConfig()->getNested("formId.select");
 		$formPacket->formData = json_encode($this->jsonSerialize());
 		$player->dataPacket($formPacket);
 	}
