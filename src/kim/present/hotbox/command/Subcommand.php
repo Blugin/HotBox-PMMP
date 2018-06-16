@@ -50,7 +50,6 @@ abstract class Subcommand{
 	 * @return bool
 	 */
 	public function checkLabel(string $label) : bool{
-		var_dump($label . " -> " . $this->name);
 		return strcasecmp($label, $this->name) === 0 || in_array($label, $this->aliases);
 	}
 
