@@ -9,9 +9,11 @@ use kim\present\hotbox\lang\PluginLang;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
+use pocketmine\item\Item;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -107,6 +109,24 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
+		if($sender instanceof Player){
+			if(empty($args[0])){
+				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
+					$namedTag = $sender->namedtag->getCompoundTag("HotBox");
+					if($namedTag instanceof CompoundTag && $this->lastTime == $namedTag->getInt("LastTime")){
+						$items = [];
+						/** @var CompoundTag $itemTag */
+						foreach($namedTag->getListTag("HotBoxInventory") as $i => $itemTag){
+							$items[] = Item::nbtDeserialize($itemTag);
+						}
+					}else{
+						$items = $this->hotBoxInventory->getContents();
+					}
+					$sender->addWindow(new HotBoxInventory($items));
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
