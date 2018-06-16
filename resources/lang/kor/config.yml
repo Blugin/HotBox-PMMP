@@ -7,6 +7,11 @@ settings:
   #가능한 언어: eng, kor
   language: "kor"
 
+  #Form id for HotBox
+  #It was determined by the HoxBox repo ID (According to https://api.github.com/repos/PresentKim/HotBox-PMMP)
+  formId: 1375577770 #137557777 + 0
+
+
 command:
   #메인 명령어의 이름
   #원하는대로 수정할 수 있습니다
