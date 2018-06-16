@@ -8,6 +8,7 @@ use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\inventory\HotBoxRewardInventory;
 use kim\present\hotbox\lang\PluginLang;
+use kim\present\hotbox\listener\PlayerEventListener;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
@@ -97,6 +98,7 @@ class HotBox extends PluginBase{
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
 		$this->subcommandSelectForm = new SubcommandSelectForm($this);
+		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);
 	}
 
 	public function onDisable() : void{
