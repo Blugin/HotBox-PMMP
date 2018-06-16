@@ -11,4 +11,17 @@ permissions:
   hotbox.cmd:
     description: HotBox command
     default: op
+    children:
+      hotbox.cmd.open:
+        description: HotBox command - open
+        default: true
+      hotbox.cmd.edit:
+        description: HotBox command - edit
+        default: op
+      hotbox.cmd.on:
+        description: HotBox command - on
+        default: op
+      hotbox.cmd.off:
+        description: HotBox command - off
+        default: op
 ...
