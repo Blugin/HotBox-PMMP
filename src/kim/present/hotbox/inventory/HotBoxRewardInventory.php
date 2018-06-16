@@ -50,4 +50,11 @@ class HotBoxRewardInventory extends HotBoxInventory{
 		$namedTag->setInt(HotBox::LAST_TIME_TAG, HotBox::getInstance()->getLastTime());
 		$namedTag->setTag($this->nbtSerialize(HotBox::INVENTORY_TAG));
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getName() : string{
+		return "HotBoxRewardInventory";
+	}
 }
