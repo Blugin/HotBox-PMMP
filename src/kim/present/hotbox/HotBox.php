@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kim\present\hotbox;
 
 use kim\present\hotbox\inventory\HotBoxInventory;
+use kim\present\hotbox\inventory\HotBoxRewardInventory;
 use kim\present\hotbox\lang\PluginLang;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
@@ -112,17 +113,7 @@ class HotBox extends PluginBase{
 		if($sender instanceof Player){
 			if(empty($args[0])){
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
-					$namedTag = $sender->namedtag->getCompoundTag("HotBox");
-					if($namedTag instanceof CompoundTag && $this->lastTime == $namedTag->getInt("LastTime")){
-						$items = [];
-						/** @var CompoundTag $itemTag */
-						foreach($namedTag->getListTag("HotBoxInventory") as $i => $itemTag){
-							$items[] = Item::nbtDeserialize($itemTag);
-						}
-					}else{
-						$items = $this->hotBoxInventory->getContents();
-					}
-					$sender->addWindow(new HotBoxInventory($items));
+					$sender->addWindow(new HotBoxRewardInventory($sender));
 					return true;
 				}
 			}
