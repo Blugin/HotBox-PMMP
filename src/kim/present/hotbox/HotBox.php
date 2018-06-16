@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox;
 
+use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\inventory\HotBoxRewardInventory;
 use kim\present\hotbox\lang\PluginLang;
@@ -54,6 +55,11 @@ class HotBox extends PluginBase{
 	 */
 	private $hotBoxInventory;
 
+	/**
+	 * @var SubcommandSelectForm
+	 */
+	private $subcommandSelectForm;
+
 	public function onLoad() : void{
 		self::$instance = $this;
 	}
@@ -89,6 +95,8 @@ class HotBox extends PluginBase{
 		$this->command->setUsage($this->language->translateString("commands.hotbox.usage"));
 		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
+
+		$this->subcommandSelectForm = new SubcommandSelectForm($this);
 	}
 
 	public function onDisable() : void{
@@ -114,7 +122,7 @@ class HotBox extends PluginBase{
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
 					$sender->addWindow(new HotBoxRewardInventory($sender));
 				}else{
-					//TODO: Send subcommand select form
+					$this->subcommandSelectForm->sendForm($sender);
 				}
 			}else{
 				$config = $this->getConfig();
@@ -202,6 +210,13 @@ class HotBox extends PluginBase{
 	 */
 	public function getHotBoxInventory() : HotBoxInventory{
 		return $this->hotBoxInventory;
+	}
+
+	/**
+	 * @return SubcommandSelectForm
+	 */
+	public function getSubcommandSelectForm() : SubcommandSelectForm{
+		return $this->subcommandSelectForm;
 	}
 
 	/**
