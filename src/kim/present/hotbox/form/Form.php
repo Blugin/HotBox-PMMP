@@ -25,7 +25,7 @@ declare(strict_types=1);
  * API for Minecraft: Bedrock custom UI (forms)
  */
 
-namespace kim\present\inventorymonitor\form;
+namespace kim\present\hotbox\form;
 
 use pocketmine\Player;
 

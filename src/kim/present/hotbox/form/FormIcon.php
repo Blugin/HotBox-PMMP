@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace kim\present\inventorymonitor\form;
+namespace kim\present\hotbox\form;
 
 /**
  * Represents an icon which can be placed next to options on menus, or as the icon for the server-settings form type.

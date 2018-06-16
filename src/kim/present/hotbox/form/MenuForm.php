@@ -21,9 +21,9 @@
 
 declare(strict_types=1);
 
-namespace kim\present\inventorymonitor\form;
+namespace kim\present\hotbox\form;
 
-use kim\present\inventorymonitor\utils\Utils;
+use kim\present\hotbox\utils\Utils;
 use pocketmine\Player;
 
 /**

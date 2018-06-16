@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace kim\present\inventorymonitor\form;
+namespace kim\present\hotbox\form;
 
 /**
  * Represents an option on a MenuForm. The option is shown as a button and may optionally have an image next to it.
