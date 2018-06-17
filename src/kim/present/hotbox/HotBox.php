@@ -23,6 +23,11 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
+	public const OPEN = 0;
+	public const EDIT = 1;
+	public const ON = 2;
+	public const OFF = 3;
+
 	public const LAST_TIME_TAG = "LastTime";
 	public const INVENTORY_TAG = "HotBoxInventory";
 	public const IS_HOT_TIME_TAG = "IsHotTime";

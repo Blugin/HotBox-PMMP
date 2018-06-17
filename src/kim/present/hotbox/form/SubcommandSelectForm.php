@@ -11,11 +11,6 @@ use pocketmine\Player;
 use pocketmine\Server;
 
 class SubcommandSelectForm extends MenuForm{
-	public const OPTION_OPEN = 0;
-	public const OPTION_EDIT = 1;
-	public const OPTION_ON = 2;
-	public const OPTION_OFF = 3;
-
 	/**
 	 * @var SubcommandSelectForm
 	 */
@@ -53,10 +48,10 @@ class SubcommandSelectForm extends MenuForm{
 
 		$command = "/" . $config->getNested("command.name") . " ";
 		$this->commands = [
-			self::OPTION_OPEN => $command . $config->getNested("command.children.open.name"),
-			self::OPTION_EDIT => $command . $config->getNested("command.children.edit.name"),
-			self::OPTION_ON => $command . $config->getNested("command.children.enable.name"),
-			self::OPTION_OFF => $command . $config->getNested("command.children.disable.name")
+			HotBox::OPEN => $command . $config->getNested("command.children.open.name"),
+			HotBox::EDIT => $command . $config->getNested("command.children.edit.name"),
+			HotBox::ON => $command . $config->getNested("command.children.enable.name"),
+			HotBox::OFF => $command . $config->getNested("command.children.disable.name")
 		];
 
 
