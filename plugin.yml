@@ -10,7 +10,7 @@ description: Have fun with the box for hot-time!
 permissions:
   hotbox.cmd:
     description: HotBox command
-    default: op
+    default: true
     children:
       hotbox.cmd.open:
         description: HotBox command - open
