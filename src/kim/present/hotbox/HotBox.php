@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace kim\present\hotbox;
 
 use kim\present\hotbox\command\{
-	EditSubcommand, DisableSubcommand, EnableSubcommand, OpenSubcommand, Subcommand
+	DisableSubcommand, EditSubcommand, EnableSubcommand, OpenSubcommand, Subcommand
 };
 use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
@@ -79,11 +79,10 @@ class HotBox extends PluginBase{
 	}
 
 	public function onEnable() : void{
-		foreach($this->getResources() as $filename => $fileInfo){
-			if(stripos(strrev($filename), strrev("config.yml")) !== 0){
-				$this->saveResource($filename, false);
-			}
-		}
+		$this->saveResource("lang/eng/lang.ini", false);
+		$this->saveResource("lang/kor/lang.ini", false);
+		$this->saveResource("lang/language.list", false);
+
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
 		$config = $this->getConfig();
