@@ -11,6 +11,7 @@ use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\inventory\HotBoxRewardInventory;
 use kim\present\hotbox\lang\PluginLang;
+use kim\present\hotbox\listener\InventoryEventListener;
 use kim\present\hotbox\listener\PlayerEventListener;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
@@ -115,6 +116,7 @@ class HotBox extends PluginBase{
 			new DisableSubcommand($this)
 		];
 		$this->menuForm = new SubcommandSelectForm($this);
+		$this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener(), $this);
 		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);
 	}
 
