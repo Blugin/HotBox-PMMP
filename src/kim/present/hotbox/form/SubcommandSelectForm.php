@@ -30,12 +30,6 @@ class SubcommandSelectForm extends MenuForm{
 	 * @var HotBox
 	 */
 	private $plugin;
-
-	/**
-	 * @var string[]
-	 */
-	private $commands;
-
 	/**
 	 * SubcommandSelectForm constructor.
 	 *
@@ -43,17 +37,6 @@ class SubcommandSelectForm extends MenuForm{
 	 */
 	public function __construct(HotBox $plugin){
 		$this->plugin = $plugin;
-
-		$config = $this->plugin->getConfig();
-
-		$command = "/" . $config->getNested("command.name") . " ";
-		$this->commands = [
-			HotBox::OPEN => $command . $config->getNested("command.children.open.name"),
-			HotBox::EDIT => $command . $config->getNested("command.children.edit.name"),
-			HotBox::ON => $command . $config->getNested("command.children.enable.name"),
-			HotBox::OFF => $command . $config->getNested("command.children.disable.name")
-		];
-
 
 		$lang = $plugin->getLanguage();
 		parent::__construct($lang->translateString("hotbox.menu.title"), $lang->translateString("hotbox.menu.text"), [
@@ -70,15 +53,11 @@ class SubcommandSelectForm extends MenuForm{
 	 * @return null|Form
 	 */
 	public function onSubmit(Player $player) : ?Form{
-		if(!isset($this->commands[$this->selectedOption])){
+		$subcommands = $this->plugin->getSubcommands();
+		if(!isset($subcommands[$this->selectedOption])){
 			return null;
 		}
-		$event = new PlayerCommandPreprocessEvent($player, $this->commands[$this->selectedOption]);
-		$server = Server::getInstance();
-		$server->getPluginManager()->callEvent($event);
-		if(!$event->isCancelled()){
-			$server->dispatchCommand($player, substr($event->getMessage(), 1));
-		}
+		$subcommands[$this->selectedOption]->handle($player);
 
 		return null;
 	}
