@@ -9,7 +9,6 @@ use kim\present\hotbox\command\{
 };
 use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
-use kim\present\hotbox\inventory\HotBoxRewardInventory;
 use kim\present\hotbox\lang\PluginLang;
 use kim\present\hotbox\listener\InventoryEventListener;
 use kim\present\hotbox\listener\PlayerEventListener;
@@ -117,10 +116,10 @@ class HotBox extends PluginBase{
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
 		$this->subcommands = [
-			new OpenSubcommand($this),
-			new EditSubcommand($this),
-			new EnableSubcommand($this),
-			new DisableSubcommand($this)
+			self::OPEN => new OpenSubcommand($this),
+			self::EDIT => new EditSubcommand($this),
+			self::ON => new EnableSubcommand($this),
+			self::OFF => new DisableSubcommand($this)
 		];
 		$this->menuForm = new SubcommandSelectForm($this);
 		$this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener(), $this);
@@ -149,7 +148,7 @@ class HotBox extends PluginBase{
 		if($sender instanceof Player){
 			if(empty($args[0])){
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
-					$sender->addWindow(new HotBoxRewardInventory($sender));
+					$this->subcommands[self::OPEN]->handle($sender);
 				}else{
 					$this->menuForm->sendForm($sender);
 				}
