@@ -25,6 +25,7 @@ use pocketmine\plugin\PluginBase;
 class HotBox extends PluginBase{
 	public const LAST_TIME_TAG = "LastTime";
 	public const INVENTORY_TAG = "HotBoxInventory";
+	public const IS_HOT_TIME_TAG = "IsHotTime";
 
 	/**
 	 * @var HotBox
@@ -51,7 +52,7 @@ class HotBox extends PluginBase{
 	/**
 	 * @var bool
 	 */
-	private $isHotTime = false;
+	private $isHotTime;
 
 	/**
 	 * @var int
@@ -95,12 +96,14 @@ class HotBox extends PluginBase{
 			if($namedTag instanceof CompoundTag){
 				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
+				$this->isHotTime = (bool) $namedTag->getInt(HotBox::IS_HOT_TIME_TAG, 0);
 			}else{
 				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
 		}else{
 			$this->lastTime = -1;
 			$this->inventory = new HotBoxInventory();
+			$this->isHotTime = false;
 		}
 
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
@@ -124,7 +127,8 @@ class HotBox extends PluginBase{
 		//Save hot time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
-			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG)
+			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
+			new IntTag(HotBox::IS_HOT_TIME_TAG, (int) $this->isHotTime)
 		]);
 		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($namedTag));
 	}
