@@ -41,12 +41,12 @@ class HotBoxInventory extends CustomInventory{
 	 */
 	public function __construct($items = []){
 		parent::__construct(new Vector3(0, 0, 0), $items, 27);
-		$this->nbt = new CompoundTag('', [
-			new StringTag('id', 'Chest'),
-			new IntTag('x', 0),
-			new IntTag('y', 0),
-			new IntTag('z', 0),
-			new StringTag('CustomName', HotBox::getInstance()->getLanguage()->translateString('hotbox.chest.name.edit'))
+		$this->nbt = new CompoundTag("", [
+			new StringTag("id", "Chest"),
+			new IntTag("x", 0),
+			new IntTag("y", 0),
+			new IntTag("z", 0),
+			new StringTag("CustomName", HotBox::getInstance()->getLanguage()->translateString("hotbox.chest.name.edit"))
 		]);
 	}
 
@@ -70,9 +70,9 @@ class HotBoxInventory extends CustomInventory{
 		$who->sendDataPacket($pk);
 
 
-		$this->nbt->setInt('x', $this->vectors[$key]->x);
-		$this->nbt->setInt('y', $this->vectors[$key]->y);
-		$this->nbt->setInt('z', $this->vectors[$key]->z);
+		$this->nbt->setInt("x", $this->vectors[$key]->x);
+		$this->nbt->setInt("y", $this->vectors[$key]->y);
+		$this->nbt->setInt("z", $this->vectors[$key]->z);
 
 		$pk = new BlockEntityDataPacket();
 		$pk->x = $this->vectors[$key]->x;
@@ -143,7 +143,7 @@ class HotBoxInventory extends CustomInventory{
 	 *
 	 * @return ListTag
 	 */
-	public function nbtSerialize(string $tagName = 'Inventory') : ListTag{
+	public function nbtSerialize(string $tagName = "Inventory") : ListTag{
 		$tag = new ListTag($tagName, [], NBT::TAG_Compound);
 		for($slot = 0; $slot < 27; ++$slot){
 			$item = $this->getItem($slot);
