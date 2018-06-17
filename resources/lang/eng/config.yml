@@ -7,6 +7,10 @@ settings:
   #Available: eng, kor
   language: "eng"
 
+  #Form id for HotBox
+  #It was determined by the HotBox repo ID (According to https://api.github.com/repos/PresentKim/HotBox-PMMP)
+  formId: 1375577770 #137557777 + 0
+
 command:
   #Name of main command
   #You can change this to be what you want

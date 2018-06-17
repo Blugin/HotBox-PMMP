@@ -7,8 +7,8 @@ settings:
   #가능한 언어: eng, kor
   language: "kor"
 
-  #Form id for HotBox
-  #It was determined by the HotBox repo ID (According to https://api.github.com/repos/PresentKim/HotBox-PMMP)
+  #HotBox를 위한 폼 ID
+  #이것은 HotBox의 레포 ID에 따라 정해졌습니다 (https://api.github.com/repos/PresentKim/HotBox-PMMP 에 따라)
   formId: 1375577770 #137557777 + 0
 
 
