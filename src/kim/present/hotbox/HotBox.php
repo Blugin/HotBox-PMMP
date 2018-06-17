@@ -152,10 +152,12 @@ class HotBox extends PluginBase{
 				return true;
 			}
 		}
-		foreach($this->subcommands as $key => $subcommand){
-			if($subcommand->checkLabel($args[0])){
-				$subcommand->handle($sender);
-				return true;
+		if(isset($args[0])){
+			foreach($this->subcommands as $key => $subcommand){
+				if($subcommand->checkLabel($args[0])){
+					$subcommand->handle($sender);
+					return true;
+				}
 			}
 		}
 		return false;
