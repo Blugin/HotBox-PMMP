@@ -209,6 +209,13 @@ class HotBox extends PluginBase{
 	}
 
 	/**
+	 * @return Subcommand[]
+	 */
+	public function getSubcommands() : array{
+		return $this->subcommands;
+	}
+
+	/**
 	 * @return SubcommandSelectForm
 	 */
 	public function getMenuForm() : SubcommandSelectForm{
