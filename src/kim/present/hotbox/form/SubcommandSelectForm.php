@@ -75,7 +75,7 @@ class SubcommandSelectForm extends MenuForm{
 	 * @return null|Form
 	 */
 	public function onSubmit(Player $player) : ?Form{
-		if(!isset($this->subcommands[$this->selectedOption])){
+		if(!isset($this->commands[$this->selectedOption])){
 			return null;
 		}
 		$event = new PlayerCommandPreprocessEvent($player, $this->commands[$this->selectedOption]);
