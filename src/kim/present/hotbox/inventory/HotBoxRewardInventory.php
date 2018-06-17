@@ -23,17 +23,19 @@ class HotBoxRewardInventory extends HotBoxInventory{
 	public function __construct(Player $player){
 		$this->player = $player;
 
+		$plugin = HotBox::getInstance();
 		$namedTag = $player->namedtag->getCompoundTag("HotBox");
-		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::LAST_TIME_TAG) === HotBox::getInstance()->getLastTime()){
+		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::LAST_TIME_TAG) === $plugin->getLastTime()){
 			$items = [];
 			/** @var CompoundTag $itemTag */
 			foreach($namedTag->getListTag(HotBox::INVENTORY_TAG) as $i => $itemTag){
 				$items[] = Item::nbtDeserialize($itemTag);
 			}
 		}else{
-			$items = HotBox::getInstance()->getInventory()->getContents();
+			$items = $plugin->getInventory()->getContents();
 		}
 		parent::__construct($items);
+		$this->nbt->setString("CustomName", $plugin->getLanguage()->translateString('hotbox.chest.name.open'));
 	}
 
 	/**

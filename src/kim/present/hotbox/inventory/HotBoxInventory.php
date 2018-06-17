@@ -27,12 +27,12 @@ class HotBoxInventory extends CustomInventory{
 	/**
 	 * @var CompoundTag
 	 */
-	private $nbt;
+	protected $nbt;
 
 	/**
 	 * @var Vector3[]
 	 */
-	private $vectors = [];
+	protected $vectors = [];
 
 	/**
 	 * HotBoxInventory constructor.
@@ -46,7 +46,7 @@ class HotBoxInventory extends CustomInventory{
 			new IntTag('x', 0),
 			new IntTag('y', 0),
 			new IntTag('z', 0),
-			new StringTag('CustomName', HotBox::getInstance()->getLanguage()->translateString('hotbox.chest.name'))
+			new StringTag('CustomName', HotBox::getInstance()->getLanguage()->translateString('hotbox.chest.name.edit'))
 		]);
 	}
 
