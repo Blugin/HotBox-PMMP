@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace kim\present\hotbox\command;
 
 use kim\present\hotbox\HotBox;
+use kim\present\hotbox\utils\ClockParser;
 use pocketmine\command\CommandSender;
 
 class EnableSubcommand extends Subcommand{
@@ -45,11 +46,25 @@ class EnableSubcommand extends Subcommand{
 	 */
 	public function execute(CommandSender $sender, array $args = []) : void{
 		if($this->plugin->isHotTime()){
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.already"));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.failure.already"));
 		}else{
 			$this->plugin->setHotTime(true);
 			$this->plugin->setLastTime(time());
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.success"));
+			if(isset($args[0])){
+				$timeArr = ClockParser::parse($args[0]);
+				if($timeArr === null){
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.failure.invalidTime"));
+				}else{
+					$this->plugin->setEndTime(time() + ClockParser::toTimestamp($timeArr));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.success.withTime", [
+						(string) $timeArr[ClockParser::HOUR],
+						(string) $timeArr[ClockParser::MINUTE],
+						(string) $timeArr[ClockParser::SECOND]
+					]));
+				}
+			}else{
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.success"));
+			}
 		}
 	}
 }
