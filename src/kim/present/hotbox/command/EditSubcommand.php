@@ -42,8 +42,9 @@ class EditSubcommand extends Subcommand{
 
 	/**
 	 * @param CommandSender $sender
+	 * @param string[]      $args = []
 	 */
-	public function execute(CommandSender $sender) : void{
+	public function execute(CommandSender $sender, array $args = []) : void{
 		if($sender instanceof Player){
 			$sender->addWindow($this->plugin->getInventory());
 		}else{
