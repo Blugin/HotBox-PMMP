@@ -259,7 +259,7 @@ class HotBox extends PluginBase{
 	/**
 	 * @return bool
 	 */
-	public function isStarted() : bool{
+	public function isHotTime() : bool{
 		return time() > $this->endTime;
 	}
 
@@ -271,7 +271,7 @@ class HotBox extends PluginBase{
 	 * @return bool it same as `!$this->isStarted()`
 	 */
 	public function startHotTime(int $duration = null) : bool{
-		if($this->isStarted()){
+		if($this->isHotTime()){
 			return false;
 		}
 		$this->startTime = time();
@@ -289,7 +289,7 @@ class HotBox extends PluginBase{
 	 * @return bool it same as `$this->isStarted()`
 	 */
 	public function stopHotTime() : bool{
-		if($this->isStarted()){
+		if($this->isHotTime()){
 			$this->startTime = -1;
 			$this->endTime = -1;
 			return true;

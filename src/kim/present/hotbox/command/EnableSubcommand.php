@@ -45,7 +45,7 @@ class EnableSubcommand extends Subcommand{
 	 * @param string[]      $args = []
 	 */
 	public function execute(CommandSender $sender, array $args = []) : void{
-		if($this->plugin->isStarted()){
+		if($this->plugin->isHotTime()){
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.failure.already"));
 		}else{
 			if(isset($args[0])){
