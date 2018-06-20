@@ -59,7 +59,7 @@ class ClockParser{
 	 *
 	 * @param string $str
 	 *
-	 * @return array|null
+	 * @return int[]|null
 	 */
 	public static function parse(string $str) : ?array{
 		if(!preg_match(self::PATTERN, $str, $match)){
@@ -77,22 +77,5 @@ class ClockParser{
 			$result[self::SECOND] = (int) $match[3];
 		}
 		return $result;
-	}
-
-	/**
-	 * Parse string to timestamp
-	 *
-	 * @param string $str
-	 *
-	 * @return int|null
-	 */
-	public static function parseToTimestamp(string $str) : ?int{
-		$timeArr = self::parse($str);
-		if($timeArr === null){
-			return null;
-		}
-		return $timeArr[self::SECOND] * self::SECOND_MULTIPLE
-			+ $timeArr[self::MINUTE] * self::MINUTE_MULTIPLE
-			+ $timeArr[self::HOUR] * self::HOUR_MULTIPLE;
 	}
 }
