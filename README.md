@@ -44,23 +44,23 @@ The configuration files is loaded  when the plugin is enabled.
 
 
 ## Command
-Main command : `/hotbox [Open | Edit | On | Off]`
+Main command : `/hotbox [Open | Edit | Enable | Disable]`
 
 | subcommand | arguments | description               |
 | :--------- | :-------- | :------------------------ |
 | Open       |           | Open hot box (reward box) |
 | Edit       |           | Edit hot-time reward      |
-| On         |           | Enable hot-time           |
-| Off        |           | Disable hot-time          |
+| Enable     |           | Enable hot-time           |
+| Disable    |           | Disable hot-time          |
 
 
 
 ## Permission
-| permission        | default | description       |
-| :---------------- | :-----: | ----------------: |
-| hotbox.cmd        |  USER   |      main command |
-|                   |         |                   |
-| hotbox.cmd.open   |  USER   |   open subcommand |
-| hotbox.cmd.edit   |   OP    |   edit subcommand |
-| hotbox.cmd.on     |   OP    |     on subcommand |
-| hotbox.cmd.off    |   OP    |    off subcommand |
+| permission         | default |        description |
+| :----------------- | :-----: | -----------------: |
+| hotbox.cmd         |  USER   |       main command |
+|                    |         |                    |
+| hotbox.cmd.open    |  USER   |    open subcommand |
+| hotbox.cmd.edit    |   OP    |    edit subcommand |
+| hotbox.cmd.enable  |   OP    |  enable subcommand |
+| hotbox.cmd.disable |   OP    | disable subcommand |

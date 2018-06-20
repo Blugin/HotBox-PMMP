@@ -18,10 +18,10 @@ permissions:
       hotbox.cmd.edit:
         description: HotBox command - edit
         default: op
-      hotbox.cmd.on:
-        description: HotBox command - on
+      hotbox.cmd.enable:
+        description: HotBox command - enable
         default: op
-      hotbox.cmd.off:
-        description: HotBox command - off
+      hotbox.cmd.disable:
+        description: HotBox command - disable
         default: op
 ...
