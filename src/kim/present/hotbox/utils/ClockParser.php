@@ -87,20 +87,12 @@ class ClockParser{
 	 * @return int|null
 	 */
 	public static function parseToTimestamp(string $str) : ?int{
-		if(!preg_match(self::PATTERN, $str, $match)){
+		$timeArr = self::parse($str);
+		if($timeArr === null){
 			return null;
 		}
-		$result = 0;
-		if(($count = count($match)) === 2){
-			$result += ((int) $match[1]) * self::SECOND_MULTIPLE;
-		}elseif($count === 3){
-			$result += ((int) $match[1]) * self::MINUTE_MULTIPLE;
-			$result += ((int) $match[2]) * self::SECOND_MULTIPLE;
-		}elseif($count === 4){
-			$result += ((int) $match[1]) * self::HOUR_MULTIPLE;
-			$result += ((int) $match[2]) * self::MINUTE_MULTIPLE;
-			$result += ((int) $match[3]) * self::SECOND_MULTIPLE;
-		}
-		return $result;
+		return $timeArr[self::SECOND] * self::SECOND_MULTIPLE
+			+ $timeArr[self::MINUTE] * self::MINUTE_MULTIPLE
+			+ $timeArr[self::HOUR] * self::HOUR_MULTIPLE;
 	}
 }
