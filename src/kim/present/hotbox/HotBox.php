@@ -47,9 +47,10 @@ class HotBox extends PluginBase{
 	public const ON = 2;
 	public const OFF = 3;
 
-	public const LAST_TIME_TAG = "LastTime";
-	public const INVENTORY_TAG = "HotBoxInventory";
 	public const IS_HOT_TIME_TAG = "IsHotTime";
+	public const LAST_TIME_TAG = "LastTime";
+	public const END_TIME_TAG = "EndTime";
+	public const INVENTORY_TAG = "HotBoxInventory";
 
 	/**
 	 * @var HotBox
@@ -82,6 +83,11 @@ class HotBox extends PluginBase{
 	 * @var int
 	 */
 	private $lastTime;
+
+	/**
+	 * @var int
+	 */
+	private $endTime;
 
 	/**
 	 * @var HotBoxInventory
@@ -117,6 +123,7 @@ class HotBox extends PluginBase{
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
 				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG);
+				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, 0x7FFFFFFF);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
 				$this->isHotTime = (bool) $namedTag->getInt(HotBox::IS_HOT_TIME_TAG, 0);
 			}else{
@@ -124,6 +131,7 @@ class HotBox extends PluginBase{
 			}
 		}else{
 			$this->lastTime = -1;
+			$this->endTime = 0x7FFFFFFF;
 			$this->inventory = new HotBoxInventory();
 			$this->isHotTime = false;
 		}
@@ -166,6 +174,7 @@ class HotBox extends PluginBase{
 		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
+			new IntTag(HotBox::END_TIME_TAG, $this->endTime),
 			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
 			new IntTag(HotBox::IS_HOT_TIME_TAG, (int) $this->isHotTime)
 		]);
@@ -217,6 +226,9 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function isHotTime() : bool{
+		if(time() > $this->endTime){
+			$this->isHotTime = false;
+		}
 		return $this->isHotTime;
 	}
 
@@ -225,6 +237,9 @@ class HotBox extends PluginBase{
 	 */
 	public function setHotTime(bool $enable = true) : void{
 		$this->isHotTime = $enable;
+		if($enable){
+			$this->endTime = 0x7FFFFFFF;
+		}
 	}
 
 	/**
@@ -239,6 +254,20 @@ class HotBox extends PluginBase{
 	 */
 	public function setLastTime(int $lastTime) : void{
 		$this->lastTime = $lastTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEndTime() : int{
+		return $this->endTime;
+	}
+
+	/**
+	 * @param int $endTime = 0x7FFFFFFF
+	 */
+	public function setEndTime(int $endTime = 0x7FFFFFFF) : void{
+		$this->endTime = $endTime;
 	}
 
 	/**
