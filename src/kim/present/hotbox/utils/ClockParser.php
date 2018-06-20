@@ -27,8 +27,15 @@ declare(strict_types=1);
 namespace kim\present\hotbox\utils;
 
 class ClockParser{
+	/**
+	 * RegExp pattern for parse clock string
+	 * ex) "10:00", "23:59:59"
+	 */
 	public const PATTERN = "/^(\d+)(?:[:-](\d+))?(?:[:-](\d+))?$/";
 
+	/**
+	 * Constants for ClockParser::parse()
+	 */
 	public const HOUR = 0;
 	public const MINUTE = 1;
 	public const SECOND = 2;
@@ -39,6 +46,9 @@ class ClockParser{
 		self::SECOND => 0
 	];
 
+	/**
+	 * Constants for ClockParser::parseToTimestamp()
+	 */
 	public const SECOND_MULTIPLE = 1;
 	public const MINUTE_MULTIPLE = self::SECOND_MULTIPLE * 60;
 	public const HOUR_MULTIPLE = self::MINUTE_MULTIPLE * 60;
