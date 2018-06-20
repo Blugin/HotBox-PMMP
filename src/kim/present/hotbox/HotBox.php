@@ -138,10 +138,18 @@ class HotBox extends PluginBase{
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
 		if($sender instanceof Player){
 			if(empty($args[0])){
-				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
-					$this->subcommands[self::OPEN]->handle($sender);
-					return true;
+				$targetSubcommand = null;
+				foreach($this->subcommands as $key => $subcommand){
+					if($sender->hasPermission($subcommand->getPermission())){
+						if($targetSubcommand === null){
+							$targetSubcommand = $subcommand;
+						}else{
+							//Filter out cases where more than two command has permission
+							return false;
+						}
+					}
 				}
+				$targetSubcommand->handle($sender);
 			}
 		}
 		if(isset($args[0])){
