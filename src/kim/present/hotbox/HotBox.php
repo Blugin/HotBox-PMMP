@@ -76,17 +76,21 @@ class HotBox extends PluginBase{
 	}
 
 	public function onEnable() : void{
+		//Save default resources
 		$this->saveResource("lang/eng/lang.ini", false);
 		$this->saveResource("lang/kor/lang.ini", false);
 		$this->saveResource("lang/language.list", false);
 
+		//Load config file
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
+
+		//Load language file
 		$config = $this->getConfig();
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
-		//Load hot time reward data
+		//Load hot-time reward data
 		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
@@ -102,12 +106,14 @@ class HotBox extends PluginBase{
 			$this->isHotTime = false;
 		}
 
+		//Register main command
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
 		$this->command->setAliases($config->getNested("command.aliases"));
 		$this->command->setUsage($this->language->translateString("commands.hotbox.usage"));
 		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
+		//Register subcommands
 		$this->subcommands = [
 			self::OPEN => new OpenSubcommand($this),
 			self::EDIT => new EditSubcommand($this),
@@ -118,7 +124,7 @@ class HotBox extends PluginBase{
 	}
 
 	public function onDisable() : void{
-		//Save hot time reward data
+		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
 			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
