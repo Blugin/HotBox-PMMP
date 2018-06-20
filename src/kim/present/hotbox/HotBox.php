@@ -195,9 +195,10 @@ class HotBox extends PluginBase{
 			}
 			$targetSubcommand->handle($sender);
 		}else{
+			$label = array_shift($args);
 			foreach($this->subcommands as $key => $subcommand){
-				if($subcommand->checkLabel($args[0])){
-					$subcommand->handle($sender);
+				if($subcommand->checkLabel($label)){
+					$subcommand->handle($sender, $args);
 					return true;
 				}
 			}
