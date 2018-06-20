@@ -39,7 +39,6 @@ use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\permission\Permission;
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -48,9 +47,10 @@ class HotBox extends PluginBase{
 	public const ON = 2;
 	public const OFF = 3;
 
-	public const LAST_TIME_TAG = "LastTime";
-	public const INVENTORY_TAG = "HotBoxInventory";
 	public const IS_HOT_TIME_TAG = "IsHotTime";
+	public const LAST_TIME_TAG = "LastTime";
+	public const END_TIME_TAG = "EndTime";
+	public const INVENTORY_TAG = "HotBoxInventory";
 
 	/**
 	 * @var HotBox
@@ -83,6 +83,11 @@ class HotBox extends PluginBase{
 	 * @var int
 	 */
 	private $lastTime;
+
+	/**
+	 * @var int
+	 */
+	private $endTime;
 
 	/**
 	 * @var HotBoxInventory
@@ -118,6 +123,7 @@ class HotBox extends PluginBase{
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
 				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG);
+				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, 0x7FFFFFFF);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
 				$this->isHotTime = (bool) $namedTag->getInt(HotBox::IS_HOT_TIME_TAG, 0);
 			}else{
@@ -125,6 +131,7 @@ class HotBox extends PluginBase{
 			}
 		}else{
 			$this->lastTime = -1;
+			$this->endTime = 0x7FFFFFFF;
 			$this->inventory = new HotBoxInventory();
 			$this->isHotTime = false;
 		}
@@ -167,6 +174,7 @@ class HotBox extends PluginBase{
 		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
+			new IntTag(HotBox::END_TIME_TAG, $this->endTime),
 			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
 			new IntTag(HotBox::IS_HOT_TIME_TAG, (int) $this->isHotTime)
 		]);
@@ -182,26 +190,24 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
-		if($sender instanceof Player){
-			if(empty($args[0])){
-				$targetSubcommand = null;
-				foreach($this->subcommands as $key => $subcommand){
-					if($sender->hasPermission($subcommand->getPermission())){
-						if($targetSubcommand === null){
-							$targetSubcommand = $subcommand;
-						}else{
-							//Filter out cases where more than two command has permission
-							return false;
-						}
+		if(empty($args[0])){
+			$targetSubcommand = null;
+			foreach($this->subcommands as $key => $subcommand){
+				if($sender->hasPermission($subcommand->getPermission())){
+					if($targetSubcommand === null){
+						$targetSubcommand = $subcommand;
+					}else{
+						//Filter out cases where more than two command has permission
+						return false;
 					}
 				}
-				$targetSubcommand->handle($sender);
 			}
-		}
-		if(isset($args[0])){
+			$targetSubcommand->handle($sender);
+		}else{
+			$label = array_shift($args);
 			foreach($this->subcommands as $key => $subcommand){
-				if($subcommand->checkLabel($args[0])){
-					$subcommand->handle($sender);
+				if($subcommand->checkLabel($label)){
+					$subcommand->handle($sender, $args);
 					return true;
 				}
 			}
@@ -220,6 +226,9 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function isHotTime() : bool{
+		if(time() > $this->endTime){
+			$this->isHotTime = false;
+		}
 		return $this->isHotTime;
 	}
 
@@ -228,6 +237,9 @@ class HotBox extends PluginBase{
 	 */
 	public function setHotTime(bool $enable = true) : void{
 		$this->isHotTime = $enable;
+		if($enable){
+			$this->endTime = 0x7FFFFFFF;
+		}
 	}
 
 	/**
@@ -242,6 +254,20 @@ class HotBox extends PluginBase{
 	 */
 	public function setLastTime(int $lastTime) : void{
 		$this->lastTime = $lastTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEndTime() : int{
+		return $this->endTime;
+	}
+
+	/**
+	 * @param int $endTime = 0x7FFFFFFF
+	 */
+	public function setEndTime(int $endTime = 0x7FFFFFFF) : void{
+		$this->endTime = $endTime;
 	}
 
 	/**

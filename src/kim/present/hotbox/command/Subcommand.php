@@ -83,10 +83,11 @@ abstract class Subcommand{
 
 	/**
 	 * @param CommandSender $sender
+	 * @param string[]      $args = []
 	 */
-	public function handle(CommandSender $sender) : void{
+	public function handle(CommandSender $sender, array $args = []) : void{
 		if($sender->hasPermission($this->permission)){
-			$this->execute($sender);
+			$this->execute($sender, $args);
 		}else{
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.permission"));
 		}
@@ -94,8 +95,9 @@ abstract class Subcommand{
 
 	/**
 	 * @param CommandSender $sender
+	 * @param string[]      $args = []
 	 */
-	public abstract function execute(CommandSender $sender) : void;
+	public abstract function execute(CommandSender $sender, array $args = []) : void;
 
 	/**
 	 * @return string
