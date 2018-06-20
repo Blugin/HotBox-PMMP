@@ -74,14 +74,9 @@ class HotBox extends PluginBase{
 	private $command;
 
 	/**
-	 * @var int
+	 * @var Subcommand[]
 	 */
-	private $startTime;
-
-	/**
-	 * @var int
-	 */
-	private $endTime;
+	private $subcommands;
 
 	/**
 	 * @var HotBoxInventory
@@ -89,9 +84,9 @@ class HotBox extends PluginBase{
 	private $inventory;
 
 	/**
-	 * @var Subcommand[]
+	 * @var int
 	 */
-	private $subcommands;
+	private $startTime, $endTime;
 
 	public function onLoad() : void{
 		self::$instance = $this;
@@ -207,6 +202,26 @@ class HotBox extends PluginBase{
 	}
 
 	/**
+	 * @Override for multilingual support of the config file
+	 *
+	 * @return bool
+	 */
+	public function saveDefaultConfig() : bool{
+		$resource = $this->getResource("lang/{$this->getServer()->getLanguage()->getLang()}/config.yml");
+		if($resource === null){
+			$resource = $this->getResource("lang/" . PluginLang::FALLBACK_LANGUAGE . "/config.yml");
+		}
+
+		if(!file_exists($configFile = $this->getDataFolder() . "config.yml")){
+			$ret = stream_copy_to_stream($resource, $fp = fopen($configFile, "wb")) > 0;
+			fclose($fp);
+			fclose($resource);
+			return $ret;
+		}
+		return false;
+	}
+
+	/**
 	 * @return PluginLang
 	 */
 	public function getLanguage() : PluginLang{
@@ -214,10 +229,17 @@ class HotBox extends PluginBase{
 	}
 
 	/**
-	 * @return bool
+	 * @return Subcommand[]
 	 */
-	public function isStarted() : bool{
-		return time() > $this->endTime;
+	public function getSubcommands() : array{
+		return $this->subcommands;
+	}
+
+	/**
+	 * @return HotBoxInventory
+	 */
+	public function getInventory() : HotBoxInventory{
+		return $this->inventory;
 	}
 
 	/**
@@ -225,6 +247,20 @@ class HotBox extends PluginBase{
 	 */
 	public function getStartTime() : int{
 		return $this->startTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEndTime() : int{
+		return $this->endTime;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStarted() : bool{
+		return time() > $this->endTime;
 	}
 
 	/**
@@ -248,13 +284,6 @@ class HotBox extends PluginBase{
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getEndTime() : int{
-		return $this->endTime;
-	}
-
-	/**
 	 * Stop hot-time
 	 *
 	 * @return bool it same as `$this->isStarted()`
@@ -264,40 +293,6 @@ class HotBox extends PluginBase{
 			$this->startTime = -1;
 			$this->endTime = -1;
 			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @return HotBoxInventory
-	 */
-	public function getInventory() : HotBoxInventory{
-		return $this->inventory;
-	}
-
-	/**
-	 * @return Subcommand[]
-	 */
-	public function getSubcommands() : array{
-		return $this->subcommands;
-	}
-
-	/**
-	 * @Override for multilingual support of the config file
-	 *
-	 * @return bool
-	 */
-	public function saveDefaultConfig() : bool{
-		$resource = $this->getResource("lang/{$this->getServer()->getLanguage()->getLang()}/config.yml");
-		if($resource === null){
-			$resource = $this->getResource("lang/" . PluginLang::FALLBACK_LANGUAGE . "/config.yml");
-		}
-
-		if(!file_exists($configFile = $this->getDataFolder() . "config.yml")){
-			$ret = stream_copy_to_stream($resource, $fp = fopen($configFile, "wb")) > 0;
-			fclose($fp);
-			fclose($resource);
-			return $ret;
 		}
 		return false;
 	}
