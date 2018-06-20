@@ -38,6 +38,11 @@ abstract class Subcommand{
 	/**
 	 * @var string
 	 */
+	protected $label;
+
+	/**
+	 * @var string
+	 */
 	private $name;
 
 	/**
@@ -58,6 +63,7 @@ abstract class Subcommand{
 	 */
 	public function __construct(HotBox $plugin, string $label){
 		$this->plugin = $plugin;
+		$this->label = $label;
 
 		$config = $plugin->getConfig();
 		$this->name = $config->getNested("command.children.{$label}.name");
@@ -90,6 +96,13 @@ abstract class Subcommand{
 	 * @param CommandSender $sender
 	 */
 	public abstract function execute(CommandSender $sender) : void;
+
+	/**
+	 * @return string
+	 */
+	public function getLabel() : string{
+		return $this->label;
+	}
 
 	/**
 	 * @return string
