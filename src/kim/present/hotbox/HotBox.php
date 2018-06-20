@@ -7,11 +7,9 @@ namespace kim\present\hotbox;
 use kim\present\hotbox\command\{
 	DisableSubcommand, EditSubcommand, EnableSubcommand, OpenSubcommand, Subcommand
 };
-use kim\present\hotbox\form\SubcommandSelectForm;
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\lang\PluginLang;
 use kim\present\hotbox\listener\InventoryEventListener;
-use kim\present\hotbox\listener\PlayerEventListener;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
@@ -73,11 +71,6 @@ class HotBox extends PluginBase{
 	 */
 	private $subcommands;
 
-	/**
-	 * @var SubcommandSelectForm
-	 */
-	private $menuForm;
-
 	public function onLoad() : void{
 		self::$instance = $this;
 	}
@@ -121,9 +114,7 @@ class HotBox extends PluginBase{
 			self::ON => new EnableSubcommand($this),
 			self::OFF => new DisableSubcommand($this)
 		];
-		$this->menuForm = new SubcommandSelectForm($this);
 		$this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener(), $this);
-		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener($this), $this);
 	}
 
 	public function onDisable() : void{
@@ -149,10 +140,8 @@ class HotBox extends PluginBase{
 			if(empty($args[0])){
 				if($sender->hasPermission("hotbox.cmd.open") && !$sender->hasPermission("hotbox.cmd.edit")){
 					$this->subcommands[self::OPEN]->handle($sender);
-				}else{
-					$this->menuForm->sendForm($sender);
+					return true;
 				}
-				return true;
 			}
 		}
 		if(isset($args[0])){
@@ -213,13 +202,6 @@ class HotBox extends PluginBase{
 	 */
 	public function getSubcommands() : array{
 		return $this->subcommands;
-	}
-
-	/**
-	 * @return SubcommandSelectForm
-	 */
-	public function getMenuForm() : SubcommandSelectForm{
-		return $this->menuForm;
 	}
 
 	/**
