@@ -32,3 +32,17 @@ command:
     disable:
       name: "Disable"
       aliases: ["off", "stop"]
+
+
+permission:
+  #Permission of main command
+  #You can change this to be what you want
+  main: true
+
+  children:
+    #Permission of subcommands
+    #Same as Permission of main command setting
+    open: true
+    edit: op
+    enable: op
+    disable: op
