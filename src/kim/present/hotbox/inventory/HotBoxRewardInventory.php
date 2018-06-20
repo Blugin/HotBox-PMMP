@@ -38,6 +38,11 @@ class HotBoxRewardInventory extends HotBoxInventory{
 	private $player;
 
 	/**
+	 * @var bool
+	 */
+	private $opened;
+
+	/**
 	 * HotBoxRewardInventory constructor.
 	 *
 	 * @param Player $player
@@ -47,7 +52,8 @@ class HotBoxRewardInventory extends HotBoxInventory{
 
 		$plugin = HotBox::getInstance();
 		$namedTag = $player->namedtag->getCompoundTag("HotBox");
-		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::START_TIME_TAG, 0) === $plugin->getStartTime()){
+		$this->opened = $namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::START_TIME_TAG, 0) === $plugin->getStartTime();
+		if($this->opened){
 			$items = [];
 			/** @var CompoundTag $itemTag */
 			foreach($namedTag->getListTag(HotBox::INVENTORY_TAG) as $i => $itemTag){
@@ -80,5 +86,12 @@ class HotBoxRewardInventory extends HotBoxInventory{
 	 */
 	public function getName() : string{
 		return "HotBoxRewardInventory";
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isOpened() : bool{
+		return $this->opened;
 	}
 }

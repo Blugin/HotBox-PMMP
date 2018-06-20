@@ -48,7 +48,12 @@ class OpenSubcommand extends Subcommand{
 	public function execute(CommandSender $sender, array $args = []) : void{
 		if($sender instanceof Player){
 			if($this->plugin->isHotTime()){
-				$sender->addWindow(new HotBoxRewardInventory($sender));
+				$rewardInventory = new HotBoxRewardInventory($sender);
+				if($rewardInventory->isOpened() && $this->plugin->getConfig()->getNested("settings.onetime-reward", false)){
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.open.failure.alreadyOpend"));
+				}else{
+					$sender->addWindow($rewardInventory);
+				}
 			}else{
 				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.open.failure.notHotTime"));
 			}
