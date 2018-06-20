@@ -39,7 +39,6 @@ use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\permission\Permission;
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -182,23 +181,20 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
-		if($sender instanceof Player){
-			if(empty($args[0])){
-				$targetSubcommand = null;
-				foreach($this->subcommands as $key => $subcommand){
-					if($sender->hasPermission($subcommand->getPermission())){
-						if($targetSubcommand === null){
-							$targetSubcommand = $subcommand;
-						}else{
-							//Filter out cases where more than two command has permission
-							return false;
-						}
+		if(empty($args[0])){
+			$targetSubcommand = null;
+			foreach($this->subcommands as $key => $subcommand){
+				if($sender->hasPermission($subcommand->getPermission())){
+					if($targetSubcommand === null){
+						$targetSubcommand = $subcommand;
+					}else{
+						//Filter out cases where more than two command has permission
+						return false;
 					}
 				}
-				$targetSubcommand->handle($sender);
 			}
-		}
-		if(isset($args[0])){
+			$targetSubcommand->handle($sender);
+		}else{
 			foreach($this->subcommands as $key => $subcommand){
 				if($subcommand->checkLabel($args[0])){
 					$subcommand->handle($sender);
