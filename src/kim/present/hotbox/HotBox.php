@@ -116,15 +116,15 @@ class HotBox extends PluginBase{
 		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
-				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG);
-				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, 0x7FFFFFFF);
+				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG, -1);
+				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, -1);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
 			}else{
 				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
 		}else{
 			$this->lastTime = -1;
-			$this->endTime = 0x7FFFFFFF;
+			$this->endTime = -1;
 			$this->inventory = new HotBoxInventory();
 		}
 
