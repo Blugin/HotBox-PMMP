@@ -44,8 +44,8 @@ use pocketmine\plugin\PluginBase;
 class HotBox extends PluginBase{
 	public const OPEN = 0;
 	public const EDIT = 1;
-	public const ON = 2;
-	public const OFF = 3;
+	public const ENABLE = 2;
+	public const DISABLE = 3;
 
 	public const START_TIME_TAG = "StartTime";
 	public const END_TIME_TAG = "EndTime";
@@ -135,8 +135,8 @@ class HotBox extends PluginBase{
 		$this->subcommands = [
 			self::OPEN => new OpenSubcommand($this),
 			self::EDIT => new EditSubcommand($this),
-			self::ON => new EnableSubcommand($this),
-			self::OFF => new DisableSubcommand($this)
+			self::ENABLE => new EnableSubcommand($this),
+			self::DISABLE => new DisableSubcommand($this)
 		];
 
 		//Load permission's default value from config
