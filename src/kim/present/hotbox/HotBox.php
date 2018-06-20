@@ -260,7 +260,7 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function isHotTime() : bool{
-		return time() > $this->endTime;
+		return time() < $this->endTime;
 	}
 
 	/**
