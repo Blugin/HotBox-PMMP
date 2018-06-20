@@ -228,10 +228,23 @@ class HotBox extends PluginBase{
 	}
 
 	/**
-	 * @param int $startTime
+	 * Start hot-time (Support duration)
+	 *
+	 * @param int $duration
+	 *
+	 * @return bool it same as `!$this->isStarted()`
 	 */
-	public function setStartTime(int $startTime) : void{
-		$this->startTime = $startTime;
+	public function startHotTime(int $duration = null) : bool{
+		if($this->isStarted()){
+			return false;
+		}
+		$this->startTime = time();
+		if($duration === null){
+			$this->endTime = 0x7FFFFFFF;
+		}else{
+			$this->endTime = $this->startTime + $duration;
+		}
+		return true;
 	}
 
 	/**
@@ -242,10 +255,17 @@ class HotBox extends PluginBase{
 	}
 
 	/**
-	 * @param int $endTime = 0x7FFFFFFF
+	 * Stop hot-time
+	 *
+	 * @return bool it same as `$this->isStarted()`
 	 */
-	public function setEndTime(int $endTime = 0x7FFFFFFF) : void{
-		$this->endTime = $endTime;
+	public function stopHotTime() : bool{
+		if($this->isStarted()){
+			$this->startTime = -1;
+			$this->endTime = -1;
+			return true;
+		}
+		return false;
 	}
 
 	/**

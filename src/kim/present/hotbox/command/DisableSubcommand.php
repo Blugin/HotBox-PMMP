@@ -44,8 +44,7 @@ class DisableSubcommand extends Subcommand{
 	 * @param string[]      $args = []
 	 */
 	public function execute(CommandSender $sender, array $args = []) : void{
-		if($this->plugin->isStarted()){
-			$this->plugin->setEndTime(-1);
+		if($this->plugin->stopHotTime()){
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.disable.success"));
 		}else{
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.disable.already"));
