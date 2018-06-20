@@ -36,8 +36,8 @@ Enable hot-time allows users to open hotbox.
   - [x] in `config.yml` file
 - [x] Configure the form id (for prevent duplicate collisions with other plugin)
   - [x] in `config.yml` file
-- [ ] Configure the permission of command  
-  - [ ] in `config.yml` file
+- [x] Configure the permission of command  
+  - [x] in `config.yml` file
 
 The configuration files is created when the plugin is enabled.  
 The configuration files is loaded  when the plugin is enabled.  
