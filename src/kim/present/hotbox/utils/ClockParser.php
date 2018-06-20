@@ -39,6 +39,11 @@ class ClockParser{
 		self::SECOND => 0
 	];
 
+	public const SECOND_MULTIPLE = 1;
+	public const MINUTE_MULTIPLE = self::SECOND_MULTIPLE * 60;
+	public const HOUR_MULTIPLE = self::MINUTE_MULTIPLE * 60;
+
+
 	/**
 	 * Parse string to array of time parts
 	 *
@@ -77,14 +82,14 @@ class ClockParser{
 		}
 		$result = 0;
 		if(($count = count($match)) === 2){
-			$result += ((int) $match[1]); //SECOND
+			$result += ((int) $match[1]) * self::SECOND_MULTIPLE;
 		}elseif($count === 3){
-			$result += ((int) $match[1]) * 60; //MINUTE
-			$result += ((int) $match[2]); //SECOND
+			$result += ((int) $match[1]) * self::MINUTE_MULTIPLE;
+			$result += ((int) $match[2]) * self::SECOND_MULTIPLE;
 		}elseif($count === 4){
-			$result += ((int) $match[1]) * 60 * 60; //HOUR
-			$result += ((int) $match[2]) * 60; //MINUTE
-			$result += ((int) $match[3]); //SECOND
+			$result += ((int) $match[1]) * self::HOUR_MULTIPLE;
+			$result += ((int) $match[2]) * self::MINUTE_MULTIPLE;
+			$result += ((int) $match[3]) * self::SECOND_MULTIPLE;
 		}
 		return $result;
 	}
