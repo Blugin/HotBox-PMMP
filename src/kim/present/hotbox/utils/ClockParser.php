@@ -27,6 +27,8 @@ declare(strict_types=1);
 namespace kim\present\hotbox\utils;
 
 class ClockParser{
+	public const PATTERN = "/^(\d+)(?:[:-](\d+))?(?:[:-](\d+))?$/";
+
 	public const HOUR = 0;
 	public const MINUTE = 1;
 	public const SECOND = 2;
@@ -45,7 +47,7 @@ class ClockParser{
 	 * @return array|null
 	 */
 	public static function parse(string $str) : ?array{
-		if(!preg_match("/^(\d+)(?:[:-](\d+))?(?:[:-](\d+))?$/", $str, $match)){
+		if(!preg_match(self::PATTERN, $str, $match)){
 			return null;
 		}
 		$result = self::DEFAULT_RESULT;
@@ -70,7 +72,7 @@ class ClockParser{
 	 * @return int|null
 	 */
 	public static function parseToTimestamp(string $str) : ?int{
-		if(!preg_match("/^(\d+)(?:[:-](\d+))?(?:[:-](\d+))?$/", $str, $match)){
+		if(!preg_match(self::PATTERN, $str, $match)){
 			return null;
 		}
 		$result = 0;
