@@ -47,7 +47,7 @@ class HotBoxRewardInventory extends HotBoxInventory{
 
 		$plugin = HotBox::getInstance();
 		$namedTag = $player->namedtag->getCompoundTag("HotBox");
-		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::START_TIME_TAG) === $plugin->getStartTime()){
+		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::START_TIME_TAG, 0) === $plugin->getStartTime()){
 			$items = [];
 			/** @var CompoundTag $itemTag */
 			foreach($namedTag->getListTag(HotBox::INVENTORY_TAG) as $i => $itemTag){
