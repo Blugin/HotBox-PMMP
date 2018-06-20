@@ -47,7 +47,7 @@ class OpenSubcommand extends Subcommand{
 	 */
 	public function execute(CommandSender $sender, array $args = []) : void{
 		if($sender instanceof Player){
-			if($this->plugin->isHotTime()){
+			if($this->plugin->isStarted()){
 				$sender->addWindow(new HotBoxRewardInventory($sender));
 			}else{
 				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.open.failure.notHotTime"));

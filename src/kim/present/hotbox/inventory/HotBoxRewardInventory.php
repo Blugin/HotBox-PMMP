@@ -47,7 +47,7 @@ class HotBoxRewardInventory extends HotBoxInventory{
 
 		$plugin = HotBox::getInstance();
 		$namedTag = $player->namedtag->getCompoundTag("HotBox");
-		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::LAST_TIME_TAG) === $plugin->getLastTime()){
+		if($namedTag instanceof CompoundTag && $namedTag->getInt(HotBox::START_TIME_TAG) === $plugin->getStartTime()){
 			$items = [];
 			/** @var CompoundTag $itemTag */
 			foreach($namedTag->getListTag(HotBox::INVENTORY_TAG) as $i => $itemTag){
@@ -71,7 +71,7 @@ class HotBoxRewardInventory extends HotBoxInventory{
 			$namedTag = new CompoundTag("HotBox");
 			$this->player->namedtag->setTag($namedTag);
 		}
-		$namedTag->setInt(HotBox::LAST_TIME_TAG, HotBox::getInstance()->getLastTime());
+		$namedTag->setInt(HotBox::START_TIME_TAG, HotBox::getInstance()->getStartTime());
 		$namedTag->setTag($this->nbtSerialize(HotBox::INVENTORY_TAG));
 	}
 

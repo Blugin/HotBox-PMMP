@@ -47,7 +47,7 @@ class HotBox extends PluginBase{
 	public const ON = 2;
 	public const OFF = 3;
 
-	public const LAST_TIME_TAG = "LastTime";
+	public const START_TIME_TAG = "StartTime";
 	public const END_TIME_TAG = "EndTime";
 	public const INVENTORY_TAG = "HotBoxInventory";
 
@@ -76,7 +76,7 @@ class HotBox extends PluginBase{
 	/**
 	 * @var int
 	 */
-	private $lastTime;
+	private $startTime;
 
 	/**
 	 * @var int
@@ -116,14 +116,14 @@ class HotBox extends PluginBase{
 		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
 			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 			if($namedTag instanceof CompoundTag){
-				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG, -1);
+				$this->startTime = $namedTag->getInt(HotBox::START_TIME_TAG, -1);
 				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, -1);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
 			}else{
 				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
 		}else{
-			$this->lastTime = -1;
+			$this->startTime = -1;
 			$this->endTime = -1;
 			$this->inventory = new HotBoxInventory();
 		}
@@ -165,7 +165,7 @@ class HotBox extends PluginBase{
 	public function onDisable() : void{
 		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
-			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
+			new IntTag(HotBox::START_TIME_TAG, $this->startTime),
 			new IntTag(HotBox::END_TIME_TAG, $this->endTime),
 			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
 		]);
@@ -216,22 +216,22 @@ class HotBox extends PluginBase{
 	/**
 	 * @return bool
 	 */
-	public function isHotTime() : bool{
+	public function isStarted() : bool{
 		return time() > $this->endTime;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getLastTime() : int{
-		return $this->lastTime;
+	public function getStartTime() : int{
+		return $this->startTime;
 	}
 
 	/**
-	 * @param int $lastTime
+	 * @param int $startTime
 	 */
-	public function setLastTime(int $lastTime) : void{
-		$this->lastTime = $lastTime;
+	public function setStartTime(int $startTime) : void{
+		$this->startTime = $startTime;
 	}
 
 	/**

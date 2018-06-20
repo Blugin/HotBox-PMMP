@@ -45,10 +45,10 @@ class EnableSubcommand extends Subcommand{
 	 * @param string[]      $args = []
 	 */
 	public function execute(CommandSender $sender, array $args = []) : void{
-		if($this->plugin->isHotTime()){
+		if($this->plugin->isStarted()){
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.failure.already"));
 		}else{
-			$this->plugin->setLastTime(time());
+			$this->plugin->setStartTime(time());
 			if(isset($args[0])){
 				$timeArr = ClockParser::parse($args[0]);
 				if($timeArr === null){
