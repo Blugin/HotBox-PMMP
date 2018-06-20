@@ -78,4 +78,17 @@ class ClockParser{
 		}
 		return $result;
 	}
+
+	/**
+	 * Convert array of time parts to timestamp
+	 *
+	 * @param int[] $timeArr
+	 *
+	 * @return int
+	 */
+	public static function toTimestamp(array $timeArr) : int{
+		return $timeArr[self::SECOND] * self::SECOND_MULTIPLE
+			+ $timeArr[self::MINUTE] * self::MINUTE_MULTIPLE
+			+ $timeArr[self::HOUR] * self::HOUR_MULTIPLE;
+	}
 }
