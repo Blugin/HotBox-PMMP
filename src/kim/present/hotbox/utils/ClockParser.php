@@ -61,4 +61,29 @@ class ClockParser{
 		}
 		return $result;
 	}
+
+	/**
+	 * Parse string to timestamp
+	 *
+	 * @param string $str
+	 *
+	 * @return int|null
+	 */
+	public static function parseToTimestamp(string $str) : ?int{
+		if(!preg_match("/^(\d+)(?:[:-](\d+))?(?:[:-](\d+))?$/", $str, $match)){
+			return null;
+		}
+		$result = 0;
+		if(($count = count($match)) === 2){
+			$result += ((int) $match[1]); //SECOND
+		}elseif($count === 3){
+			$result += ((int) $match[1]) * 60; //MINUTE
+			$result += ((int) $match[2]); //SECOND
+		}elseif($count === 4){
+			$result += ((int) $match[1]) * 60 * 60; //HOUR
+			$result += ((int) $match[2]) * 60; //MINUTE
+			$result += ((int) $match[3]); //SECOND
+		}
+		return $result;
+	}
 }
