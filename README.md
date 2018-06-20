@@ -23,21 +23,23 @@ Enable hot-time allows users to open hotbox.
   - [x] OP)   Open menu form for select sub command  
   - [x] USER) Open hot box  
 - [ ] Hot-time automation
-  - [ ] Set hot-time period  
+  - [x] Set hot-time period  
   - [ ] Automatically start at specific times  
-- [ ] Add a setting that allows to open the box only once  
+- [x] Support configurable things  
 
 
 ## Configurable things
-- [x] Configure the language for messages
+- [x] Configure the whether allows to open the box only once  
+  - [x] in `config.yml` file  
+- [x] Configure the language for messages  
   - [x] in `{SELECTED LANG}/lang.ini` file  
-  - [x] Select language in `config.yml` file
-- [x] Configure the command (include subcommands)
-  - [x] in `config.yml` file
-- [x] Configure the form id (for prevent duplicate collisions with other plugin)
-  - [x] in `config.yml` file
+  - [x] Select language in `config.yml` file  
+- [x] Configure the command (include subcommands)  
+  - [x] in `config.yml` file  
+- [x] Configure the form id (for prevent duplicate collisions with other plugin)  
+  - [x] in `config.yml` file  
 - [x] Configure the permission of command  
-  - [x] in `config.yml` file
+  - [x] in `config.yml` file  
 
 The configuration files is created when the plugin is enabled.  
 The configuration files is loaded  when the plugin is enabled.  
