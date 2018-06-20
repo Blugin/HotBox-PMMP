@@ -130,6 +130,7 @@ class HotBox extends PluginBase{
 
 		//Register main command
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
+		$this->command->setPermission("hotbox.cmd");
 		$this->command->setAliases($config->getNested("command.aliases"));
 		$this->command->setUsage($this->language->translateString("commands.hotbox.usage"));
 		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
