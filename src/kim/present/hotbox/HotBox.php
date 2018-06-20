@@ -47,7 +47,6 @@ class HotBox extends PluginBase{
 	public const ON = 2;
 	public const OFF = 3;
 
-	public const IS_HOT_TIME_TAG = "IsHotTime";
 	public const LAST_TIME_TAG = "LastTime";
 	public const END_TIME_TAG = "EndTime";
 	public const INVENTORY_TAG = "HotBoxInventory";
@@ -73,11 +72,6 @@ class HotBox extends PluginBase{
 	 * @var PluginCommand
 	 */
 	private $command;
-
-	/**
-	 * @var bool
-	 */
-	private $isHotTime;
 
 	/**
 	 * @var int
@@ -125,7 +119,6 @@ class HotBox extends PluginBase{
 				$this->lastTime = $namedTag->getInt(HotBox::LAST_TIME_TAG);
 				$this->endTime = $namedTag->getInt(HotBox::END_TIME_TAG, 0x7FFFFFFF);
 				$this->inventory = HotBoxInventory::nbtDeserialize($namedTag->getListTag(HotBox::INVENTORY_TAG));
-				$this->isHotTime = (bool) $namedTag->getInt(HotBox::IS_HOT_TIME_TAG, 0);
 			}else{
 				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
 			}
@@ -133,7 +126,6 @@ class HotBox extends PluginBase{
 			$this->lastTime = -1;
 			$this->endTime = 0x7FFFFFFF;
 			$this->inventory = new HotBoxInventory();
-			$this->isHotTime = false;
 		}
 
 		//Register main command
@@ -176,7 +168,6 @@ class HotBox extends PluginBase{
 			new IntTag(HotBox::LAST_TIME_TAG, $this->lastTime),
 			new IntTag(HotBox::END_TIME_TAG, $this->endTime),
 			$this->inventory->nbtSerialize(HotBox::INVENTORY_TAG),
-			new IntTag(HotBox::IS_HOT_TIME_TAG, (int) $this->isHotTime)
 		]);
 		file_put_contents("{$this->getDataFolder()}HotBoxInventory.dat", (new BigEndianNBTStream())->writeCompressed($namedTag));
 	}
@@ -226,20 +217,7 @@ class HotBox extends PluginBase{
 	 * @return bool
 	 */
 	public function isHotTime() : bool{
-		if(time() > $this->endTime){
-			$this->isHotTime = false;
-		}
-		return $this->isHotTime;
-	}
-
-	/**
-	 * @param bool $enable = true
-	 */
-	public function setHotTime(bool $enable = true) : void{
-		$this->isHotTime = $enable;
-		if($enable){
-			$this->endTime = 0x7FFFFFFF;
-		}
+		return time() > $this->endTime;
 	}
 
 	/**

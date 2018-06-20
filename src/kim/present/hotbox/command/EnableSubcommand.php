@@ -48,7 +48,6 @@ class EnableSubcommand extends Subcommand{
 		if($this->plugin->isHotTime()){
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.failure.already"));
 		}else{
-			$this->plugin->setHotTime(true);
 			$this->plugin->setLastTime(time());
 			if(isset($args[0])){
 				$timeArr = ClockParser::parse($args[0]);
@@ -63,6 +62,7 @@ class EnableSubcommand extends Subcommand{
 					]));
 				}
 			}else{
+				$this->plugin->setEndTime(0x7FFFFFFF);
 				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.enable.success"));
 			}
 		}
