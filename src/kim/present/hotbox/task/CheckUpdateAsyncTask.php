@@ -35,9 +35,9 @@ class CheckUpdateAsyncTask extends AsyncTask{
 	private const CONTEXT_OPTION = ["http" => ["header" => "User-Agent: true"]];
 
 	/**
-	 * @var string|null Lastest version of plugin
+	 * @var string|null Latest version of plugin
 	 */
-	private $lastestVersion = null;
+	private $latestVersion = null;
 
 	/**
 	 * @var string|null File-name and Download-url of latest release
@@ -47,15 +47,15 @@ class CheckUpdateAsyncTask extends AsyncTask{
 	/**
 	 * Actions to execute when run
 	 *
-	 * Get last version for comparing with plugin version, Store to $lastestVersion
+	 * Get latest version for comparing with plugin version, Store to $latestVersion
 	 * Get file-name and download-url of latest release, Store to $fileName, $downloadURL
 	 */
 	public function onRun() : void{
 		if(ini_get("allow_url_fopen")){
-			$lastestRelease = file_get_contents(self::RELEASE_URL, false, stream_context_create(self::CONTEXT_OPTION));
-			if($lastestRelease !== false){
-				$jsonData = json_decode($lastestRelease, true);
-				$this->lastestVersion = $jsonData["tag_name"];
+			$latestRelease = file_get_contents(self::RELEASE_URL, false, stream_context_create(self::CONTEXT_OPTION));
+			if($latestRelease !== false){
+				$jsonData = json_decode($latestRelease, true);
+				$this->latestVersion = $jsonData["tag_name"];
 				foreach($jsonData["assets"] as $key => $assetData){
 					if(substr_compare($assetData["name"], ".phar", -strlen(".phar")) === 0){ //ends with ".phar"
 						$this->fileName = $assetData["name"];
@@ -74,12 +74,12 @@ class CheckUpdateAsyncTask extends AsyncTask{
 	 */
 	public function onCompletion(Server $server) : void{
 		$plugin = HotBox::getInstance();
-		if($this->lastestVersion === null){
+		if($this->latestVersion === null){
 			$plugin->getLogger()->critical("Update check failed : Connection to release server failed");
-		}elseif(version_compare($plugin->getDescription()->getVersion(), $this->lastestVersion) >= 0){
-			$plugin->getLogger()->notice("The plugin is latest version or higher (Latest version: {$this->lastestVersion})");
+		}elseif(version_compare($plugin->getDescription()->getVersion(), $this->latestVersion) >= 0){
+			$plugin->getLogger()->notice("The plugin is latest version or higher (Latest version: {$this->latestVersion})");
 		}else{
-			$plugin->getLogger()->warning("The plugin is not up to date. We recommend that you update your plugin. (Latest : {$this->lastestVersion})");
+			$plugin->getLogger()->warning("The plugin is not up to date. We recommend that you update your plugin. (Latest : {$this->latestVersion})");
 		}
 	}
 }

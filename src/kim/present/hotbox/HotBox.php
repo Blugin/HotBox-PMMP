@@ -92,7 +92,7 @@ class HotBox extends PluginBase{
 	public function onLoad() : void{
 		self::$instance = $this;
 
-		//Check lastest version
+		//Check latest version
 		$this->getServer()->getAsyncPool()->submitTask(new CheckUpdateAsyncTask());
 	}
 
