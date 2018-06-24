@@ -32,6 +32,7 @@ use kim\present\hotbox\command\{
 use kim\present\hotbox\inventory\HotBoxInventory;
 use kim\present\hotbox\lang\PluginLang;
 use kim\present\hotbox\listener\InventoryEventListener;
+use kim\present\hotbox\task\CheckUpdateAsyncTask;
 use pocketmine\command\{
 	Command, CommandSender, PluginCommand
 };
@@ -90,6 +91,9 @@ class HotBox extends PluginBase{
 
 	public function onLoad() : void{
 		self::$instance = $this;
+
+		//Check lastest version
+		$this->getServer()->getAsyncPool()->submitTask(new CheckUpdateAsyncTask());
 	}
 
 	public function onEnable() : void{
