@@ -80,6 +80,9 @@ class CheckUpdateAsyncTask extends AsyncTask{
 			$plugin->getLogger()->notice("The plugin is latest version or higher (Latest version: {$this->latestVersion})");
 		}else{
 			$plugin->getLogger()->warning("The plugin is not up to date. We recommend that you update your plugin. (Latest : {$this->latestVersion})");
+
+			//Shorten download url of latest release
+			$plugin->getServer()->getAsyncPool()->submitTask(new ShortenDownloadURLAsyncTask($this->fileName, $this->downloadURL));
 		}
 	}
 }
