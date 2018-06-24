@@ -26,6 +26,8 @@ Enable hot-time allows users to open hotbox.
   - [x] Set hot-time period  
   - [ ] Automatically start at specific times  
 - [x] Support configurable things  
+- [x] Check that the plugin is not latest version
+  - [x] If not latest version, show latest release download url
 
 
 ## Configurable things
