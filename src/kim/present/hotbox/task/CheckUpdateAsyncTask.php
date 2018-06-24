@@ -40,15 +40,28 @@ class CheckUpdateAsyncTask extends AsyncTask{
 	private $lastestVersion = null;
 
 	/**
+	 * @var string|null File-name and Download-url of latest release
+	 */
+	private $fileName, $downloadURL;
+
+	/**
 	 * Actions to execute when run
 	 *
 	 * Get last version for comparing with plugin version, Store to $lastestVersion
+	 * Get file-name and download-url of latest release, Store to $fileName, $downloadURL
 	 */
 	public function onRun() : void{
 		if(ini_get("allow_url_fopen")){
 			$lastestRelease = file_get_contents(self::RELEASE_URL, false, stream_context_create(self::CONTEXT_OPTION));
 			if($lastestRelease !== false){
-				$this->lastestVersion = json_decode($lastestRelease, true)["tag_name"];
+				$jsonData = json_decode($lastestRelease, true);
+				$this->lastestVersion = $jsonData["tag_name"];
+				foreach($jsonData["assets"] as $key => $assetData){
+					if(substr_compare($assetData["name"], ".phar", -strlen(".phar")) === 0){ //ends with ".phar"
+						$this->fileName = $assetData["name"];
+						$this->downloadURL = $assetData["browser_download_url"];
+					}
+				}
 			}
 		}
 	}
