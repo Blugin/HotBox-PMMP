@@ -1,7 +1,7 @@
-# <img src="../../../gh-pages/assets/icon/index.svg" height="50" width="50"> HotBox  
+# <img src="https://github.com/PresentKim/HotBox-PMMP/blob/master/assets/icon/index.svg?raw=true" height="50" width="50"> HotBox  
 __A plugin for [PMMP](https://pmmp.io) :: Have fun with the box for hot-time!__  
   
-[![license](https://img.shields.io/github/license/PresentKim/HotBox-PMMP.svg?label=License)](../gh-pages/LICENSE)
+[![license](https://img.shields.io/github/license/PresentKim/HotBox-PMMP.svg?label=License)](https://github.com/PresentKim/HotBox-PMMP/blob/master/LICENSE)
 [![release](https://img.shields.io/github/release/PresentKim/HotBox-PMMP.svg?label=Release)](https://github.com/PresentKim/HotBox-PMMP/releases/latest)
 [![download](https://img.shields.io/github/downloads/PresentKim/HotBox-PMMP/total.svg?label=Download)](https://github.com/PresentKim/HotBox-PMMP/releases/latest)
   
