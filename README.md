@@ -39,8 +39,6 @@ Enable hot-time allows users to open hotbox.
   - [x] Select language in `config.yml` file  
 - [x] Configure the command (include subcommands)  
   - [x] in `config.yml` file  
-- [x] Configure the form id (for prevent duplicate collisions with other plugin)  
-  - [x] in `config.yml` file  
 - [x] Configure the permission of command  
   - [x] in `config.yml` file  
   
