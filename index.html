@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotBox-PMMP</title>
+    <link rel="stylesheet" href="https://stackedit.io/style.css"/>
+</head>
+
+<body class="stackedit">
+<div class="stackedit__html">
+    <h1>
+        <img src="https://rawgit.com/PresentKim/HotBox-PMMP/master/assets/icon/index.svg" height="50" width="50"> HotBox
+    </h1>
+    <p><strong>A plugin for <a href="https://pmmp.io">PMMP</a> :: Have fun with the box for hot-time!</strong></p>
+    <p>
+        <a href="https://github.com/PresentKim/HotBox-PMMP/blob/master/LICENSE"><img src="https://img.shields.io/github/license/PresentKim/HotBox-PMMP.svg?label=License" alt="license"></a>
+        <a href="https://github.com/PresentKim/HotBox-PMMP/releases/latest"><img src="https://img.shields.io/github/release/PresentKim/HotBox-PMMP.svg?label=Release" alt="release"></a>
+        <a href="https://github.com/PresentKim/HotBox-PMMP/releases/latest"><img src="https://img.shields.io/github/downloads/PresentKim/HotBox-PMMP/total.svg?label=Download" alt="download"></a>
+    </p>
+
+
+    <h2 id="what-is-this">What is this?</h2>
+    <p>Hot box (means hot-time reward box) is a plugin that make easily give for hot-time rewards.<br>
+        You can easily set reward like a chest by opening the reward setting box.<br>
+        Enable hot-time allows users to open hotbox.
+    </p>
+
+
+    <h2 id="features">Features</h2>
+    <ul>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Save plugin data in NBT format (<code>Reward items</code>, <code>Whether to is hot time</code>, <code>Last hot-time</code>, etc.))
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            OP can edit hot-time reward
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Use the chest to make reward edit easier
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            User can open hot box
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Hot box can only be opened when hot-time is enabled
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Prevent put item in the hot box (Prevent use the hot box like to <code>virtual chest</code>)
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Save hot box data to each player’s NBT data
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Reset hot box data of player when enable hot-time
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Handle execute command without arguments
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    OP) Open menu form for select sub command
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    USER) Open hot box
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="">
+            Hot-time automation
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Set hot-time period
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="">
+                    Automatically start at specific times
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Support configurable things
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Check that the plugin is not latest version
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    If not latest version, show latest release download url
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <h2 id="configurable-things">Configurable things</h2>
+    <ul>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Configure the whether allows to open the box only once
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    in <code>config.yml</code>
+                    file
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Configure the language for messages
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    in <code>{SELECTED LANG}/lang.ini</code> file
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    Select language in <code>config.yml</code> file
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Configure the command (include subcommands)
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    in <code>config.yml</code> file
+                </li>
+            </ul>
+        </li>
+        <li class="task-list-item">
+            <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+            Configure the permission of command
+            <ul>
+                <li class="task-list-item">
+                    <input type="checkbox" class="task-list-item-checkbox" disabled="" checked>
+                    in <code>config.yml</code> file
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <p>
+        The configuration files is created when the plugin is enabled.<br>
+        The configuration files is loaded when the plugin is enabled.
+    </p>
+
+
+    <h2 id="command">Command</h2>
+    <p>Main command : <code>/hotbox [Open | Edit | Enable | Disable]</code></p>
+    <table>
+        <thead>
+        <tr>
+            <th align="left">subcommand</th>
+            <th align="left">arguments</th>
+            <th align="left">description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td align="left">Open</td>
+            <td align="left"></td>
+            <td align="left">Open hot box (reward box)</td>
+        </tr>
+        <tr>
+            <td align="left">Edit</td>
+            <td align="left"></td>
+            <td align="left">Edit hot-time reward</td>
+        </tr>
+        <tr>
+            <td align="left">Enable</td>
+            <td align="left"></td>
+            <td align="left">Enable hot-time</td>
+        </tr>
+        <tr>
+            <td align="left">Disable</td>
+            <td align="left"></td>
+            <td align="left">Disable hot-time</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h2 id="permission">Permission</h2>
+    <table>
+        <thead>
+        <tr>
+            <th align="left">permission</th>
+            <th align="center">default</th>
+            <th align="right">description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td align="left">hotbox.cmd</td>
+            <td align="center">USER</td>
+            <td align="right">main command</td>
+        </tr>
+        <tr>
+            <td align="left"></td>
+            <td align="center"></td>
+            <td align="right"></td>
+        </tr>
+        <tr>
+            <td align="left">hotbox.cmd.open</td>
+            <td align="center">USER</td>
+            <td align="right">open subcommand</td>
+        </tr>
+        <tr>
+            <td align="left">hotbox.cmd.edit</td>
+            <td align="center">OP</td>
+            <td align="right">edit subcommand</td>
+        </tr>
+        <tr>
+            <td align="left">hotbox.cmd.enable</td>
+            <td align="center">OP</td>
+            <td align="right">enable subcommand</td>
+        </tr>
+        <tr>
+            <td align="left">hotbox.cmd.disable</td>
+            <td align="center">OP</td>
+            <td align="right">disable subcommand</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
