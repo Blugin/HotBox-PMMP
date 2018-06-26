@@ -69,3 +69,4 @@ Main command : `/hotbox [Open | Edit | Enable | Disable]`
 | hotbox.cmd.edit    |   OP    |    edit subcommand |  
 | hotbox.cmd.enable  |   OP    |  enable subcommand |  
 | hotbox.cmd.disable |   OP    | disable subcommand |  
+  
