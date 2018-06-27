@@ -77,7 +77,6 @@ class PluginLang extends BaseLang{
 		return explode("\n", file_get_contents($this->plugin->getDataFolder() . "lang/language.list"));
 	}
 
-
 	/**
 	 * @param string $lang
 	 *
