@@ -52,41 +52,27 @@ class HotBox extends PluginBase{
 	public const END_TIME_TAG = "EndTime";
 	public const INVENTORY_TAG = "HotBoxInventory";
 
-	/**
-	 * @var HotBox
-	 */
+	/** @var HotBox */
 	private static $instance;
 
-	/**
-	 * @return HotBox
-	 */
+	/** @return HotBox */
 	public static function getInstance() : HotBox{
 		return self::$instance;
 	}
 
-	/**
-	 * @var PluginLang
-	 */
+	/** @var PluginLang */
 	private $language;
 
-	/**
-	 * @var PluginCommand
-	 */
+	/** @var PluginCommand */
 	private $command;
 
-	/**
-	 * @var Subcommand[]
-	 */
+	/** @var Subcommand[] */
 	private $subcommands;
 
-	/**
-	 * @var HotBoxInventory
-	 */
+	/** @var HotBoxInventory */
 	private $inventory;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $startTime, $endTime;
 
 	public function onLoad() : void{

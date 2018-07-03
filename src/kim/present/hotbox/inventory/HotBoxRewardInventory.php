@@ -32,14 +32,10 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\Player;
 
 class HotBoxRewardInventory extends HotBoxInventory{
-	/**
-	 * @var Player
-	 */
+	/** @var Player */
 	private $player;
 
-	/**
-	 * @var bool
-	 */
+	/** @var bool */
 	private $opened;
 
 	/**

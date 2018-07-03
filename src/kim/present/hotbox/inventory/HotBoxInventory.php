@@ -46,14 +46,10 @@ use pocketmine\Player;
 use pocketmine\tile\Spawnable;
 
 class HotBoxInventory extends CustomInventory{
-	/**
-	 * @var CompoundTag
-	 */
+	/** @var CompoundTag */
 	protected $nbt;
 
-	/**
-	 * @var Vector3[]
-	 */
+	/** @var Vector3[] */
 	protected $vectors = [];
 
 	/**

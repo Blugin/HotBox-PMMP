@@ -30,9 +30,7 @@ use kim\present\hotbox\HotBox;
 use pocketmine\lang\BaseLang;
 
 class PluginLang extends BaseLang{
-	/**
-	 * @var HotBox
-	 */
+	/** @var HotBox */
 	private $plugin;
 
 	/**
