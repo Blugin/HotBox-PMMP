@@ -12,7 +12,6 @@ Enable hot-time allows users to open hotbox.
   
   
 ## Features  
-- [x] Save plugin data in NBT format (`Reward items`, `Whether to is hot time`, `Last hot-time`, etc.))  
 - [x] OP can edit hot-time reward  
   - [x] Use the chest to make reward edit easier  
 - [x] User can open hot box  
@@ -26,6 +25,7 @@ Enable hot-time allows users to open hotbox.
 - [ ] Hot-time automation  
   - [x] Set hot-time period  
   - [ ] Automatically start at specific times  
+- [x] Save plugin data in NBT format (`Reward items`, `Whether to is hot time`, `Last hot-time`, etc.)  
 - [x] Support configurable things  
 - [x] Check that the plugin is not latest version  
   - [x] If not latest version, show latest release download url  
