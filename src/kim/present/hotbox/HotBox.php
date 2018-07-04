@@ -75,14 +75,20 @@ class HotBox extends PluginBase{
 	/** @var int */
 	private $startTime, $endTime;
 
-	public function onLoad() : void{
+	/**
+	 * Called when the plugin is loaded, before calling onEnable()
+	 */
+	protected function onLoad() : void{
 		self::$instance = $this;
 
 		//Check latest version
 		$this->getServer()->getAsyncPool()->submitTask(new CheckUpdateAsyncTask());
 	}
 
-	public function onEnable() : void{
+	/**
+	 * Called when the plugin is enabled
+	 */
+	protected function onEnable() : void{
 		//Save default resources
 		$this->saveResource("lang/eng/lang.ini", false);
 		$this->saveResource("lang/kor/lang.ini", false);
@@ -147,7 +153,11 @@ class HotBox extends PluginBase{
 		$this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener(), $this);
 	}
 
-	public function onDisable() : void{
+	/**
+	 * Called when the plugin is disabled
+	 * Use this to free open things and finish actions
+	 */
+	protected function onDisable() : void{
 		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::START_TIME_TAG, $this->startTime),
