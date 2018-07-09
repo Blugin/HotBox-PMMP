@@ -5,6 +5,7 @@ branches:
 
 projects:
   HotBox:
+    #projectId: 3361
     path: ""
     icon: assets/icon/512x512.png
 ...
