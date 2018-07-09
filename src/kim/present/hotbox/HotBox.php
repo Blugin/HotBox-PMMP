@@ -78,7 +78,7 @@ class HotBox extends PluginBase{
 	/**
 	 * Called when the plugin is loaded, before calling onEnable()
 	 */
-	protected function onLoad() : void{
+	public function onLoad() : void{
 		self::$instance = $this;
 
 		//Check latest version
@@ -88,7 +88,7 @@ class HotBox extends PluginBase{
 	/**
 	 * Called when the plugin is enabled
 	 */
-	protected function onEnable() : void{
+	public function onEnable() : void{
 		//Save default resources
 		$this->saveResource("lang/eng/lang.ini", false);
 		$this->saveResource("lang/kor/lang.ini", false);
@@ -157,7 +157,7 @@ class HotBox extends PluginBase{
 	 * Called when the plugin is disabled
 	 * Use this to free open things and finish actions
 	 */
-	protected function onDisable() : void{
+	public function onDisable() : void{
 		//Save hot-time reward data
 		$namedTag = new CompoundTag("HotBox", [
 			new IntTag(HotBox::START_TIME_TAG, $this->startTime),
