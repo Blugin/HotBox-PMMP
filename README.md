@@ -5,5 +5,6 @@ __A plugin for [PMMP](https://pmmp.io) :: Have fun with the box for hot-time!__
 [![release](https://img.shields.io/github/release/PresentKim/HotBox-PMMP.svg?label=Release)](../../releases/latest)
 [![download](https://img.shields.io/github/downloads/PresentKim/HotBox-PMMP/total.svg?label=Download)](../../releases/latest)
   
-## See the link below for details  
-[**Wiki**](../../wiki)  
+*****
+  
+[*See the details*](../../wiki)  
