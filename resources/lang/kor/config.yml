@@ -8,7 +8,7 @@ settings:
   language: "kor"
 
   #보상 상자를 한번만 열 수 있게 할지 여부를 선택
-  onetime-reward: false
+  onetime-reward: "false"
 
 
 command:
