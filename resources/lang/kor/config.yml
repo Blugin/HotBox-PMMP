@@ -7,7 +7,7 @@ settings:
   #가능한 언어: eng, kor
   language: "kor"
 
-  update-check: "false"
+  update-check: false
 
   #보상 상자를 한번만 열 수 있게 할지 여부를 선택
   onetime-reward: "false"

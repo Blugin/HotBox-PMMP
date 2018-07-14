@@ -7,7 +7,7 @@ settings:
   #Available: eng, kor
   language: "eng"
 
-  update-check: "false"
+  update-check: false
 
   #Choose whether to allow open the reward box one time
   onetime-reward: "false"
