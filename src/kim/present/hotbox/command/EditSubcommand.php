@@ -26,19 +26,11 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox\command;
 
-use kim\present\hotbox\HotBox;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 
 class EditSubcommand extends Subcommand{
-	/**
-	 * EditSubcommand constructor.
-	 *
-	 * @param HotBox $plugin
-	 */
-	public function __construct(HotBox $plugin){
-		parent::__construct($plugin, "edit");
-	}
+	public const LABEL = "edit";
 
 	/**
 	 * @param CommandSender $sender

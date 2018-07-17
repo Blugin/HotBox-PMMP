@@ -26,19 +26,11 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox\command;
 
-use kim\present\hotbox\HotBox;
 use kim\present\hotbox\utils\ClockParser;
 use pocketmine\command\CommandSender;
 
 class EnableSubcommand extends Subcommand{
-	/**
-	 * EnableSubcommand constructor.
-	 *
-	 * @param HotBox $plugin
-	 */
-	public function __construct(HotBox $plugin){
-		parent::__construct($plugin, "enable");
-	}
+	public const LABEL = "enable";
 
 	/**
 	 * @param CommandSender $sender
