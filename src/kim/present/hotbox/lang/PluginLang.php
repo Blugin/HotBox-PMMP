@@ -26,21 +26,21 @@ declare(strict_types=1);
 
 namespace kim\present\hotbox\lang;
 
-use kim\present\hotbox\HotBox;
 use pocketmine\lang\BaseLang;
+use pocketmine\plugin\PluginBase;
 
 class PluginLang extends BaseLang{
-	/** @var HotBox */
+	/** @var PluginBase */
 	private $plugin;
 
 	/**
 	 * @noinspection PhpMissingParentConstructorInspection
 	 * PluginLang constructor.
 	 *
-	 * @param HotBox $plugin
-	 * @param string $lang
+	 * @param PluginBase $plugin
+	 * @param string     $lang
 	 */
-	public function __construct(HotBox $plugin, string $lang){
+	public function __construct(PluginBase $plugin, string $lang){
 		$this->langName = strtolower($lang);
 		$this->plugin = $plugin;
 
