@@ -2,7 +2,7 @@
 name: HotBox
 main: kim\present\hotbox\HotBox
 version: 1.4.2
-api: [3.0.0, 3.0.0-ALPHA12, 4.0.0]
+api: [4.0.0]
 author: PresentKim
 website: https://github.com/PresentKim/HotBox-PMMP
 description: Have fun with the box for hot-time!
