@@ -39,7 +39,9 @@ use pocketmine\command\{
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
-use pocketmine\permission\Permission;
+use pocketmine\permission\{
+	Permission, PermissionManager
+};
 use pocketmine\plugin\PluginBase;
 
 class HotBox extends PluginBase{
@@ -138,7 +140,7 @@ class HotBox extends PluginBase{
 		];
 
 		//Load permission's default value from config
-		$permissions = $this->getServer()->getPluginManager()->getPermissions();
+		$permissions = PermissionManager::getInstance()->getPermissions();
 		$defaultValue = $config->getNested("permission.main");
 		if($defaultValue !== null){
 			$permissions["hotbox.cmd"]->setDefault(Permission::getByName($config->getNested("permission.main")));
