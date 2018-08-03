@@ -40,7 +40,7 @@ class EditSubcommand extends Subcommand{
 		if($sender instanceof Player){
 			$sender->addWindow($this->plugin->getInventory());
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.onlyPlayer"));
+			$sender->sendMessage($this->plugin->getLanguage()->translate("commands.generic.onlyPlayer"));
 		}
 	}
 }

@@ -59,7 +59,7 @@ class HotBoxRewardInventory extends HotBoxInventory{
 			$items = $plugin->getInventory()->getContents();
 		}
 		parent::__construct($items);
-		$this->nbt->setString("CustomName", $plugin->getLanguage()->translateString("hotbox.chest.name.open"));
+		$this->nbt->setString("CustomName", $plugin->getLanguage()->translate("hotbox.chest.name.open"));
 	}
 
 	/**

@@ -42,15 +42,15 @@ class OpenSubcommand extends Subcommand{
 			if($this->plugin->isHotTime()){
 				$rewardInventory = new HotBoxRewardInventory($sender);
 				if($rewardInventory->isOpened() && $this->plugin->getConfig()->getNested("settings.onetime-reward", false)){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.open.failure.alreadyOpend"));
+					$sender->sendMessage($this->plugin->getLanguage()->translate("commands.hotbox.open.failure.alreadyOpend"));
 				}else{
 					$sender->addWindow($rewardInventory);
 				}
 			}else{
-				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.hotbox.open.failure.notHotTime"));
+				$sender->sendMessage($this->plugin->getLanguage()->translate("commands.hotbox.open.failure.notHotTime"));
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.onlyPlayer"));
+			$sender->sendMessage($this->plugin->getLanguage()->translate("commands.generic.onlyPlayer"));
 		}
 	}
 }

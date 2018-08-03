@@ -64,7 +64,7 @@ class HotBoxInventory extends CustomInventory{
 			new IntTag("x", 0),
 			new IntTag("y", 0),
 			new IntTag("z", 0),
-			new StringTag("CustomName", HotBox::getInstance()->getLanguage()->translateString("hotbox.chest.name.edit"))
+			new StringTag("CustomName", HotBox::getInstance()->getLanguage()->translate("hotbox.chest.name.edit"))
 		]);
 	}
 

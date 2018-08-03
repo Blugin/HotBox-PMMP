@@ -105,7 +105,7 @@ class HotBox extends PluginBase{
 
 		//Load language file
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
-		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
+		$this->getLogger()->info($this->language->translate("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
 		//Load hot-time reward data
 		if(file_exists($file = "{$this->getDataFolder()}HotBoxInventory.dat")){
@@ -127,8 +127,8 @@ class HotBox extends PluginBase{
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
 		$this->command->setPermission("hotbox.cmd");
 		$this->command->setAliases($config->getNested("command.aliases"));
-		$this->command->setUsage($this->language->translateString("commands.hotbox.usage"));
-		$this->command->setDescription($this->language->translateString("commands.hotbox.description"));
+		$this->command->setUsage($this->language->translate("commands.hotbox.usage"));
+		$this->command->setDescription($this->language->translate("commands.hotbox.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
 		//Register subcommands
