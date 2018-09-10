@@ -1,4 +1,4 @@
-# <img src="./assets/icon/index.svg" height="50" width="50"> HotBox  
+# <img src="https://rawgit.com/PresentKim/SVG-files/master/plugin-icons/hotbox.svg" height="50" width="50"> HotBox  
 __A plugin for [PMMP](https://pmmp.io) :: Have fun with the box for hot-time!__  
   
 [![license](https://img.shields.io/github/license/Blugin/HotBox-PMMP.svg?label=License)](./LICENSE)
